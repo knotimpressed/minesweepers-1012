@@ -17,4 +17,4 @@ Requirement Definitions:
 * Clicked on mines change in appearance  
 * Top scores are visible in a leaderboard in the main menu
 * After playing a game users can submit their score with a name they input, which will be displayed on the leaderboard
-* The user can play as many games as they want by going back to the start menu through clicking the back button
+* The user can play as many games as they want by going back to the start menu

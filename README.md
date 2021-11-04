@@ -13,7 +13,7 @@ Requirement Definitions:
 * The game can be started by clicking the start button on the main menu
 * The game ends when an incorrect mine is clicked on  
 * The game ends when there is no time left  
-* The mines are scrambled well and all visible within the grid defined by the difficulty
+* The mines are scrambled well and all visible in the number defined by the difficulty
 * Clicked on mines change in appearance  
 * Top scores are visible in a leaderboard in the main menu
 * After playing a game users can submit their score with a name they input, which will be displayed on the leaderboard

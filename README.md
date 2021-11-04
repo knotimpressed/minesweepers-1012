@@ -8,7 +8,7 @@ Spot the Mines
 A range of numbers varying from 1-25 to 1-100 are scrambled on a grid, each number representing a mine. The number of mines can be selected with a difficulty setting, which will also impact the amount of time the user has to complete the game. The game is completed when the user clicks on every mine, in order, before the timer ends. If the user clicks on an incorrect mine or runs out of time, the game is terminated and is lost. The project will also include a basic leaderboard with the user’s best attempts so far.  
 
 Requirement Definitions:  
-* The program on start shows the user a main menu which displayes the leaderboard, start button, and difficulty button
+* The program on start shows the user a main menu which displays the leaderboard button, start button, and difficulty button
 * The user can select a difficulty level by clicking a button which impacts the number of mines and time
 * The game can be started by clicking the start button on the main menu
 * The game ends when an incorrect mine is clicked on  

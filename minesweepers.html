@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <!--Links-->
+    <link rel="stylesheet" type="text/css" href="minesweepers.css" />
+    <script src="minesweepers.js"></script>
+    <meta charset="utf-8" />
+    <title>Mines</title>
+</head>
+<!--Body-->
+<body>
+    <div id ="content" class="content">
+        <!--Header-->
+        <header>
+            <h1>Mine-sequence</h1>
+            <!--Header Buttons-->
+            <div class="headright">
+                <button onclick = "home()">Home</button>
+            </div>
+            <div class="headmiddle">
+                <button onclick = "game()">New Game</button>
+            </div>
+        </header>
+        <!--Home Screen-->
+        <div id ="home" class="home">
+            <button onclick = "leader()">Leaderboards</button>
+            <button onclick = "help()">Help!</button>
+            <button onclick = "game()">New Game</button>
+            <button class="leader" id ="leader" onclick = "difficulty()">Easy</button>
+        </div>
+        <!--Game Screen-->
+        <div id ="game" class="game">
+        </div>
+        <!--Footer-->
+        <footer>
+           EECS 1012: Luke D, Gabriel H, 2021
+        </footer>
+    </div>
+</body>
+</html>

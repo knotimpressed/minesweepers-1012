@@ -1,0 +1,38 @@
+﻿header {
+    background-image: url(images/wood.jfif);
+    text-align: left;
+    background-size: cover;
+}
+body {
+    margin-left: 10%;
+    margin-right: 10%;
+    background-color:ivory;
+    background-size: cover;
+}
+.content{
+    background-color:sandybrown;
+    background-size:cover;
+}
+.home{
+    text-align:center;
+    margin-top:20%;
+    margin-bottom:20%
+}
+footer {
+    background-image: url(images/wood.jfif);
+    text-align: center;
+    color: darkviolet;
+    background-size: cover;
+}
+.headmiddle{
+    text-align:center;
+}
+.headright{
+    text-align:right;
+}
+.leader{
+    background-color:green;
+}
+button{
+    border-radius:4px;
+}

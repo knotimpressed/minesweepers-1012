@@ -1,3 +1,5 @@
+// Current Bugs/Fixes needed: 1. Need to impliment random mine numbers and values. 2. Remove the old set of mines when starting a new game - dont do append
+
 //Home Screen
 function home() {
     //Removes the game Screen
@@ -75,10 +77,16 @@ function mines(num) {
     for (i = 1; i <= minesNum[num]; i = i + 1) {
         var board = document.getElementById("game");
         var mines = document.createElement("button");
+        $(mines).css("padding", "4px");// adds in padding so the buttons are bigger
+        $(mines).css("margin", "4px");// space between buttons
+        $(mines).css("font-size", "12px");
+        $(mines).css("font-family", "Courier New, monospace");
+        $(mines).css("font-weight", "900");
+        $(mines).css("color", "white");
+        $(mines).css("background-color", "grey");
         var minesVal = document.createTextNode(i);
         mines.appendChild(minesVal);
         //Puts the mines within the game area
         board.appendChild(mines);
     }
 }
-// Current Bugs/Fixes needed: 1. Need to impliment random mine numbers and values. 2. Remove the old set of mines when starting a new game

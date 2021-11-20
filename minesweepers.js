@@ -116,7 +116,8 @@ function mines(diffNum) {
       minesOrder.splice(randIndex, 1);// remove the randomly selected mine, shift the rest
     }
 
-    //Generates mines
+    $("#game").html("");// clears previous mines
+    // Generates mines
     for (i = 0; i < minesNum[diffNum]; i++) {
       var board = document.getElementById("game");
       var mines = document.createElement("input");

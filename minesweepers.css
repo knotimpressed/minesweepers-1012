@@ -10,8 +10,8 @@
     padding: 10px;
 }
 body {
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 30%;
+    margin-right: 30%;
     background-color:#1F1F1F;
     background-size: cover;
 }
@@ -27,7 +27,6 @@ body {
 footer {
     text-align: center;
     color: #DC2F02;
-    background-size: cover;
 }
 .headmiddle{
     text-align:center;

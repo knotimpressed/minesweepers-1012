@@ -46,7 +46,12 @@ button{
     color: white;
     background-color: grey;
 }
-.mine{    
+.mine{
+    border-radius:4px;/*the first 4 lines are duplicated becuase the mines are inputs*/
+    font-family: "Courier New", monospace;
+    font-weight: 500;
+    color: white;
+    background-color: grey;
     padding: 8px;
     display: inline-flex;
     align-items: center; 

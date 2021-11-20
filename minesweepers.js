@@ -13,15 +13,17 @@ function game() {
     //Opens the game screen
     document.getElementById("game").style.display = "block";
     //Switches the background
-    document.getElementById("content").style.background = "#0F0F0F";
-    document.getElementById("content").style.backgroundSize = "cover";
+    //document.getElementById("content").style.background = "#0F0F0F";
+    //document.getElementById("content").style.backgroundSize = "cover";
+    
     //Mines
     mines(diffCount);
 }
 
 var curMine = 1; // current mine value (which one youre on)
 
-function valMine() {
+function valMine(mineId) {// validate the current mine
+  console.log(mineId);
 
 }
 
@@ -70,7 +72,7 @@ function mines(diffNum) {
 
     // fills array of random mine numbers
     for (var l = 0; l < minesNum[diffNum]; l++) {
-      var randIndex = Math.floor(Math.random() * (minesOrder.length));// generate a random (valid) index+++
+      var randIndex = Math.floor(Math.random() * (minesOrder.length));// generate a random (valid) index
       minesRandom.push(minesOrder[randIndex]);// push the random number onto the random array
       minesOrder.splice(randIndex, 1);// remove the randomly selected mine, shift the rest
     }
@@ -78,11 +80,24 @@ function mines(diffNum) {
     //Generates mines
     for (i = 0; i < minesNum[diffNum]; i++) {
       var board = document.getElementById("game");
-      var mines = document.createElement("button");
+      var mines = document.createElement("input");
+      $(mines).attr("type", "button");
+      $(mines).attr("name", minesRandom[i]);
+      $(mines).attr("value", minesRandom[i]);
       $(mines).attr("class", "mine");
       $(mines).attr("id", "mine" + minesRandom[i]);
-      var minesVal = document.createTextNode(minesRandom[i]);
-      mines.appendChild(minesVal);
+
+      //validate the mine when its clicked
+      $(document).ready(function() {// yes i stole this(ish), no i dont know how it works
+        $(".mine").click(function(){
+          valMine(this.id);
+        }); 
+      });
+      
+      // old code (no longer needed)
+      //var minesVal = document.createTextNode(minesRandom[i]);
+      //mines.appendChild(minesVal);
+
       //Puts the mines within the game area
       board.appendChild(mines);
     }

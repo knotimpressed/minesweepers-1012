@@ -8,6 +8,7 @@
     letter-spacing: 2.5px;
     font-weight: 500;
     padding: 10px;
+    background-color: #272727;
 }
 body {
     margin-left: 30%;
@@ -27,6 +28,7 @@ body {
 footer {
     text-align: center;
     color: #DC2F02;
+    background-color: #272727;
 }
 .headmiddle{
     text-align:center;
@@ -72,7 +74,7 @@ button{
 }
 
 .game{
-  height: 500px;
+  padding: 30px;
   text-align: center;
 }
 

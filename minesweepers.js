@@ -55,13 +55,13 @@ function mines(diffNum) {
     //Array of randomized mines
     var minesRandom = [];
     var l = minesOrder.length;
-    var j = 0;
-    var temp;
-    //Puts 1 - number of mines into the array
+
+    //Puts 1 to the number of mines into the array
     for (i = 1; i <= minesNum[diffNum]; i = i + 1) {// interesting code style here @hliwudnew
         minesOrder[i - 1] = i;
     }
 
+    // fills array of random mine numbers
     for (var l = 0; l < minesNum[diffNum]; l++) {
       var randIndex = Math.floor(Math.random() * (minesOrder.length));// generate a random (valid) index+++
       minesRandom.push(minesOrder[randIndex]);// push the random number onto the random array
@@ -69,15 +69,7 @@ function mines(diffNum) {
       minesOrder.splice(randIndex, 1);// remove the randomly selected mine, shift the rest
     }
 
-
-    //Randomizes the mines numbers ( no work right now)
-    /*for (var l = minesLength.length - 1; l > 0; l--) {
-        var j = Math.floor(Math.random() * (l + 1));
-        var temp = minesRandom[l];
-        minesRandom[l] = minesRandom[j];
-        minesRandom[j] = temp;
-    }*/
-    //Generates mines based on difficulty
+    //Generates mines
     for (i = 0; i < minesNum[diffNum]; i++) {
       var board = document.getElementById("game");
       var mines = document.createElement("button");
@@ -87,14 +79,4 @@ function mines(diffNum) {
       //Puts the mines within the game area
       board.appendChild(mines);
     }
-
-    /*for (i = 1; i <= minesNum[num]; i = i + 1) {
-        var board = document.getElementById("game");
-        var mines = document.createElement("button");
-        $(mines).attr("class", "mine");
-        var minesVal = document.createTextNode(i);
-        mines.appendChild(minesVal);
-        //Puts the mines within the game area
-        board.appendChild(mines);
-    }*/
 }

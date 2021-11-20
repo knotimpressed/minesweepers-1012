@@ -1,15 +1,12 @@
 // Current Bugs/Fixes needed: 1. Need to impliment random mine numbers and values. 2. Remove the old set of mines when starting a new game - dont do append
-
+  
 //Home Screen
 function home() {
-    //Removes the game Screen
+    //Opens the game Screen
     document.getElementById("home").style.display = "block";
-    //Switches background
-    document.getElementById("content").style.background = "sandybrown";
-    document.getElementById("content").style.backgroundSize = "cover";
-    //Opens the home screen
+    //Removes the home screen
     document.getElementById("game").style.display = "none";
-    documet.getElementById("game").removeChild();
+    document.getElementById("game").removeChild();// @hliwudnew this causes errors !!!!!!!!!!!!!!!!!!!!!!!!
 }
 //The game play
 function game() {
@@ -18,7 +15,7 @@ function game() {
     //Opens the game screen
     document.getElementById("game").style.display = "block";
     //Switches the background
-    document.getElementById("content").style.background = "url('images/water.gif')";
+    document.getElementById("content").style.background = "#0F0F0F";
     document.getElementById("content").style.backgroundSize = "cover";
     //Mines
     mines(diffCount);
@@ -40,15 +37,15 @@ function difficulty() {
     }
     if (diffCount == 0) {
         document.getElementById("leader").innerHTML = "Easy";
-        document.getElementById("leader").style.background = "green";
+        document.getElementById("leader").style.background = "#03F7EB";
     }
     else if (diffCount == 1) {
         document.getElementById("leader").innerHTML = "Medium";
-        document.getElementById("leader").style.background = "yellow";
+        document.getElementById("leader").style.background = "#F48C06";
     }
     else if (diffCount == 2) {
         document.getElementById("leader").innerHTML = "Hard";
-        document.getElementById("leader").style.background = "red";
+        document.getElementById("leader").style.background = "#DC2F02";
     }
 }
 //Random Mine Number Generation
@@ -77,13 +74,7 @@ function mines(num) {
     for (i = 1; i <= minesNum[num]; i = i + 1) {
         var board = document.getElementById("game");
         var mines = document.createElement("button");
-        $(mines).css("padding", "4px");// adds in padding so the buttons are bigger
-        $(mines).css("margin", "4px");// space between buttons
-        $(mines).css("font-size", "12px");
-        $(mines).css("font-family", "Courier New, monospace");
-        $(mines).css("font-weight", "900");
-        $(mines).css("color", "white");
-        $(mines).css("background-color", "grey");
+        $(mines).attr("class", "mine");
         var minesVal = document.createTextNode(i);
         mines.appendChild(minesVal);
         //Puts the mines within the game area

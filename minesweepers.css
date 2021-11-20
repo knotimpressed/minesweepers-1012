@@ -1,16 +1,22 @@
 ﻿header {
-    background-image: url(images/wood.jfif);
-    text-align: left;
+    text-align: center;
     background-size: cover;
+    color: white;
+    font-family: "Courier New", monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: 500;
+    padding: 10px;
 }
 body {
     margin-left: 10%;
     margin-right: 10%;
-    background-color:ivory;
+    background-color:#1F1F1F;
     background-size: cover;
 }
 .content{
-    background-color:sandybrown;
+    background-color: #2B2B2B;
     background-size:cover;
 }
 .home{
@@ -19,7 +25,6 @@ body {
     margin-bottom:20%
 }
 footer {
-    background-image: url(images/wood.jfif);
     text-align: center;
     color: darkviolet;
     background-size: cover;
@@ -31,8 +36,52 @@ footer {
     text-align:right;
 }
 .leader{
-    background-color:green;
+    background-color:#03F7EB;
+    color: black;
 }
 button{
     border-radius:4px;
+    font-family: "Courier New", monospace;
+    font-weight: 500;
+    color: white;
+    background-color: grey;
+}
+.mine{    
+    padding: 8px;
+    display: inline-flex;
+    align-items: center; 
+    margin: 8px;
+    font-size: 18px;
+    font-family: "Courier New", monospace;
+    font-weight: 200;
+    color: white;
+    background-color: grey;
+    
+}
+.game{
+  height: 500px;
+  text-align: center;
+}
+
+.pretty{
+  background-color: white;
+
+  width: 140px;
+  height: 45px;
+
+  margin: 20px;
+  
+  color: #000;
+  background-color: #fff;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+  }
+
+.pretty:hover {
+  background-color: #00fff2;
+  box-shadow: 0px 15px 20px rgba(9, 200, 180, 0.4); 
 }

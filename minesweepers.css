@@ -48,10 +48,6 @@ button{
 }
 .mine{
     border-radius:4px;/*the first 4 lines are duplicated becuase the mines are inputs*/
-    font-family: "Courier New", monospace;
-    font-weight: 500;
-    color: white;
-    background-color: grey;
     padding: 8px;
     display: inline-flex;
     align-items: center; 
@@ -61,8 +57,21 @@ button{
     font-weight: 200;
     color: white;
     background-color: grey;
-    
 }
+
+.minecl{
+  border-radius:4px;/*the first 4 lines are duplicated becuase the mines are inputs*/
+  padding: 8px;
+  display: inline-flex;
+  align-items: center; 
+  margin: 8px;
+  font-size: 18px;
+  font-family: "Courier New", monospace;
+  font-weight: 200;
+  color: grey;
+  background-color: darkgrey;
+}
+
 .game{
   height: 500px;
   text-align: center;

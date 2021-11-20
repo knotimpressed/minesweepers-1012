@@ -20,11 +20,45 @@ function game() {
     mines(diffCount);
 }
 
+// game global variables, there here because this will likely change as we move to server-client
+
 var curMine = 1; // current mine value (which one youre on)
+var won = false;
+var lost = false;
 
 function valMine(mineId) {// validate the current mine
-  console.log(mineId);
+  var idString = mineId.slice(4);// i know how not great this is but like it does work
+  var idVal = parseInt(idString);
+  console.log(idVal, winNum + 2);
 
+  if(idVal == curMine){// correct mine clickec
+    curMine++;
+    //$("#mineId").attr("class", "minecl");// change the class to clicked mine
+    document.getElementById(mineId).className = "minecl";
+  }
+
+  else if(idVal > curMine){// game is lost if you skipped one only (dont count already clicked ones)
+    var lost = true;
+    gameover();
+  }
+
+  if(curMine == winNum + 1){
+    won = true;
+    gameWin();
+  }
+}
+
+// won game
+function gameWin() {
+  console.log("W");
+  alert("Dub");
+}
+
+
+// lost game
+function gameover() {
+  console.log("L");
+  alert("You lost the game!");
 }
 
 //Leader board
@@ -56,6 +90,7 @@ function difficulty() {
     }
 }
 //Random Mine Number Generation
+var winNum;// this is sloppy but its the easiest way to pass the winning mine number
 function mines(diffNum) {
     //difficulties
     var minesNum = [25, 50, 100];
@@ -64,6 +99,7 @@ function mines(diffNum) {
     //Array of randomized mines
     var minesRandom = [];
     var l = minesOrder.length;
+    winNum = minesNum[diffNum];
 
     //Puts 1 to the number of mines into the array
     for (i = 1; i <= minesNum[diffNum]; i = i + 1) {// interesting code style here @hliwudnew
@@ -86,13 +122,6 @@ function mines(diffNum) {
       $(mines).attr("value", minesRandom[i]);
       $(mines).attr("class", "mine");
       $(mines).attr("id", "mine" + minesRandom[i]);
-
-      //validate the mine when its clicked
-      $(document).ready(function() {// yes i stole this(ish), no i dont know how it works
-        $(".mine").click(function(){
-          valMine(this.id);
-        }); 
-      });
       
       // old code (no longer needed)
       //var minesVal = document.createTextNode(minesRandom[i]);
@@ -101,4 +130,10 @@ function mines(diffNum) {
       //Puts the mines within the game area
       board.appendChild(mines);
     }
+    //validate the mine when its clicked
+    $(document).ready(function() {// yes i stole this(ish), no i dont know how it works
+      $(".mine").click(function(){
+        valMine(this.id);
+      }); 
+    });
 }

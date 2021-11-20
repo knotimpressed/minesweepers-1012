@@ -61,11 +61,11 @@ function mines(diffNum) {
     for (i = 1; i <= minesNum[diffNum]; i = i + 1) {// interesting code style here @hliwudnew
         minesOrder[i - 1] = i;
     }
-    console.log(minesOrder);
 
-    for (var l = minesOrder.length - 1; l > 0; l--) {
-      var randIndex = Math.floor(Math.random() * (l + 1));// generate a random (valid) index, could use minesOrder.length instead of l
+    for (var l = 0; l < minesNum[diffNum]; l++) {
+      var randIndex = Math.floor(Math.random() * (minesOrder.length));// generate a random (valid) index+++
       minesRandom.push(minesOrder[randIndex]);// push the random number onto the random array
+      console.log(randIndex, minesOrder.length, minesOrder[randIndex], minesRandom);
       minesOrder.splice(randIndex, 1);// remove the randomly selected mine, shift the rest
     }
 
@@ -78,7 +78,7 @@ function mines(diffNum) {
         minesRandom[j] = temp;
     }*/
     //Generates mines based on difficulty
-    for (i = 1; i <= minesNum[diffNum]; i++) {
+    for (i = 0; i < minesNum[diffNum]; i++) {
       var board = document.getElementById("game");
       var mines = document.createElement("button");
       $(mines).attr("class", "mine");

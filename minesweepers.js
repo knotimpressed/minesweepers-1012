@@ -18,6 +18,7 @@ function game() {
     
     //Mines
     mines(diffCount);
+    $("#count").html(0 + "/" + winNum);
 }
 
 // game global variables, there here because this will likely change as we move to server-client
@@ -31,7 +32,7 @@ function valMine(mineId) {// validate the current mine
   var idVal = parseInt(idString);
   console.log(idVal);
 
-  if(idVal == curMine){// correct mine clickec
+  if(idVal == curMine){// correct mine clicked
     curMine++;
     //$("#mineId").attr("class", "minecl");// change the class to clicked mine
     document.getElementById(mineId).className = "minecl";
@@ -41,6 +42,8 @@ function valMine(mineId) {// validate the current mine
     var lost = true;
     gameover();
   }
+
+  $("#count").html(curMine-1 + "/" + winNum);
 
   if(curMine == winNum + 1){
     won = true;

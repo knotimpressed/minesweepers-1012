@@ -7,7 +7,6 @@
   not on wireframe: counter for which mine youre on
 
   Current Bugs/Fixes needed:
-  3. actually end game when it ends
 
   Notes: Im thinking the buttons should turn some very dim but "positive" colour when clicked
 
@@ -40,15 +39,17 @@
             <div class="headmiddle">
               <button onclick = "game()">New Game</button>
             </div>
+            <!--Timer-->
+            <div id="timer"></div>
         </header>
         <!--Home Screen-->
         <div id ="home" class="home">
             <div>
-              <button onclick = "game()" class="pretty">New Game</button> <!--@hliwudnew this spacing is bad but who cares-->
+                <button onclick = "game()" class="pretty">New Game</button><!--I now care @Knot-->
             </div>
             <button onclick = "leader()">Leaderboards</button>
             <button onclick = "help()">Help!</button>
-            <button class="leader" id ="leader" onclick = "difficulty()">Easy</button> <!--@hliwudnew is this supposed to be leader?-->
+            <button class="diff" id ="diff" onclick = "difficulty()">Easy</button>
         </div>
         <!--Game Screen-->
         <div id ="game" class="game">

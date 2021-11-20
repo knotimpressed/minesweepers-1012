@@ -4,7 +4,7 @@ function home() {
     document.getElementById("home").style.display = "block";
     //Removes the home screen
     document.getElementById("game").style.display = "none";
-    document.getElementById("game").removeChild();// @hliwudnew this causes errors              !!!!!!!!!!!!!!!!!!!!!!!!
+    //Removed it @Knot
 }
 //The game play
 function game() {
@@ -15,12 +15,13 @@ function game() {
     //Switches the background
     //document.getElementById("content").style.background = "#0F0F0F";
     //document.getElementById("content").style.backgroundSize = "cover";
-    
     //Mines
     mines(diffCount);
     $("#count").html(0 + "/" + winNum);
+    //Timer
+    //(Some how clear previous timer here, in order to start new timer)
+    timer(diffCount);
 }
-
 // game global variables, there here because this will likely change as we move to server-client
 
 var curMine = 1; // current mine value (which one youre on)
@@ -53,15 +54,23 @@ function valMine(mineId) {// validate the current mine
 
 // won game
 function gameWin() {
-  console.log("W");
-  alert("Dub");
+  console.log("W"); //Sick indent @Knot (jk)
+    alert("Dub");
+    //Just listing it for ordering properly in the future
+    leader();
+    //Back to the beginning
+    home();
 }
 
 
 // lost game
 function gameover() {
-  console.log("L");
-  alert("You lost the game!");
+  console.log("L"); //Sick indent @Knot (jk)
+    alert("You lost the game!");
+    //Just listing it for ordering properly in the future
+    leader();
+    //Back to the beginning
+    home();
 }
 
 //Leader board
@@ -80,16 +89,16 @@ function difficulty() {
         diffCount = 0;
     }
     if (diffCount == 0) {
-        document.getElementById("leader").innerHTML = "Easy";
-        document.getElementById("leader").style.background = "#03F7EB";
+        document.getElementById("diff").innerHTML = "Easy";
+        document.getElementById("diff").style.background = "#03F7EB";
     }
     else if (diffCount == 1) {
-        document.getElementById("leader").innerHTML = "Medium";
-        document.getElementById("leader").style.background = "#F48C06";
+        document.getElementById("diff").innerHTML = "Medium";
+        document.getElementById("diff").style.background = "#F48C06";
     }
     else if (diffCount == 2) {
-        document.getElementById("leader").innerHTML = "Hard";
-        document.getElementById("leader").style.background = "#DC2F02";
+        document.getElementById("diff").innerHTML = "Hard";
+        document.getElementById("diff").style.background = "#DC2F02";
     }
 }
 //Random Mine Number Generation
@@ -105,7 +114,7 @@ function mines(diffNum) {
     winNum = minesNum[diffNum];
 
     //Puts 1 to the number of mines into the array
-    for (i = 1; i <= minesNum[diffNum]; i = i + 1) {// interesting code style here @hliwudnew
+    for (i = 1; i <= minesNum[diffNum]; i = i + 1) {// idk what to make of that comment @Knot
         minesOrder[i - 1] = i;
     }
 
@@ -126,11 +135,6 @@ function mines(diffNum) {
       $(mines).attr("value", minesRandom[i]);
       $(mines).attr("class", "mine");
       $(mines).attr("id", "mine" + minesRandom[i]);
-      
-      // old code (no longer needed)
-      //var minesVal = document.createTextNode(minesRandom[i]);
-      //mines.appendChild(minesVal);
-
       //Puts the mines within the game area
       board.appendChild(mines);
     }
@@ -140,4 +144,25 @@ function mines(diffNum) {
         valMine(this.id);
       }); 
     });
+}
+//Timer
+//Probably Really bootleg but does it work?? Who knows I havent wrote it yet
+//upadte: i wrote it and gotta solve the bug of it duping timers yaaaaaaaa
+function timer(diffNum) {
+    //Each difficult in seconds from Easy - Hard(for now)
+    var timeLeft = [480, 360, 240];
+    //Puts the time in the counter
+    let counter = timeLeft[diffNum];
+    //Counts down the timer
+    const interval = setInterval(() => {
+        //Outputs the count down
+        document.getElementById("timer").innerHTML = counter;
+        counter--;
+        //Ends the game if the timer runs out
+        if (counter < 0) {
+            clearInterval(interval);
+            lost = true;
+            gameover();
+        }
+    }, 1000);
 }

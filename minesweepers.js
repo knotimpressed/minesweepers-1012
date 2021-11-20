@@ -18,6 +18,13 @@ function game() {
     //Mines
     mines(diffCount);
 }
+
+var curMine = 1; // current mine value (which one youre on)
+
+function valMine() {
+
+}
+
 //Leader board
 function leader() {
 
@@ -65,7 +72,6 @@ function mines(diffNum) {
     for (var l = 0; l < minesNum[diffNum]; l++) {
       var randIndex = Math.floor(Math.random() * (minesOrder.length));// generate a random (valid) index+++
       minesRandom.push(minesOrder[randIndex]);// push the random number onto the random array
-      console.log(randIndex, minesOrder.length, minesOrder[randIndex], minesRandom);
       minesOrder.splice(randIndex, 1);// remove the randomly selected mine, shift the rest
     }
 
@@ -74,6 +80,7 @@ function mines(diffNum) {
       var board = document.getElementById("game");
       var mines = document.createElement("button");
       $(mines).attr("class", "mine");
+      $(mines).attr("id", "mine" + minesRandom[i]);
       var minesVal = document.createTextNode(minesRandom[i]);
       mines.appendChild(minesVal);
       //Puts the mines within the game area

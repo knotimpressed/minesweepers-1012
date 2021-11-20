@@ -1,5 +1,3 @@
-// Current Bugs/Fixes needed: 1. Need to impliment random mine numbers and values. 2. Remove the old set of mines when starting a new game - dont do append
-  
 //Home Screen
 function home() {
     //Opens the game Screen

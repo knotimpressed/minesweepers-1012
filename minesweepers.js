@@ -29,7 +29,7 @@ var lost = false;
 function valMine(mineId) {// validate the current mine
   var idString = mineId.slice(4);// i know how not great this is but like it does work
   var idVal = parseInt(idString);
-  console.log(idVal, winNum + 2);
+  console.log(idVal);
 
   if(idVal == curMine){// correct mine clickec
     curMine++;

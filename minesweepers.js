@@ -57,7 +57,7 @@ function gameWin() {
   console.log("W"); //Sick indent @Knot (jk)
     alert("Dub");
     //Just listing it for ordering properly in the future
-    leader();
+    leaderInput();
     //Back to the beginning
     home();
 }
@@ -68,14 +68,18 @@ function gameover() {
   console.log("L"); //Sick indent @Knot (jk)
     alert("You lost the game!");
     //Just listing it for ordering properly in the future
-    leader();
+    leaderInput();
     //Back to the beginning
     home();
 }
 
-//Leader board
+//Leader board, to look at it
 function leader() {
-
+    alert("Leader Board Placeholder");
+}
+//To input data into the leader board
+function leaderInput() {
+    alert("Leader Board input Placeholder");
 }
 //How to play the game
 function help() {

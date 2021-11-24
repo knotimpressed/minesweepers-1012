@@ -4,7 +4,10 @@ function home() {
     document.getElementById("home").style.display = "block";
     //Removes the home screen
     document.getElementById("game").style.display = "none";
-    //Removed it @Knot
+    //Removes timer and resets it
+    clearTimeout(tmr);
+    document.getElementById("timer").innerHTML = "";
+    tmrCount = 0;
 }
 //The game play
 function game() {
@@ -18,8 +21,11 @@ function game() {
     //Mines
     mines(diffCount);
     $("#count").html(0 + "/" + winNum);
-    //Timer
-    //(Some how clear previous timer here, in order to start new timer)
+    //Clears previous timer
+    clearTimeout(tmr);
+    document.getElementById("timer").innerHTML = "";
+    tmrCount = 0;
+    //Starts timer
     timer(diffCount);
 }
 // game global variables, there here because this will likely change as we move to server-client
@@ -149,24 +155,21 @@ function mines(diffNum) {
       }); 
     });
 }
+//Timer globals
+//The timer
+var tmr;
+//Keeps track of how many timers. Only allows one to run
+var tmrCount = 0;
 //Timer
-//Probably Really bootleg but does it work?? Who knows I havent wrote it yet
-//upadte: i wrote it and gotta solve the bug of it duping timers yaaaaaaaa
 function timer(diffNum) {
     //Each difficult in seconds from Easy - Hard(for now)
-    var timeLeft = [480, 360, 240];
-    //Puts the time in the counter
-    let counter = timeLeft[diffNum];
-    //Counts down the timer
-    const interval = setInterval(() => {
-        //Outputs the count down
-        document.getElementById("timer").innerHTML = counter;
-        counter--;
-        //Ends the game if the timer runs out
-        if (counter < 0) {
-            clearInterval(interval);
-            lost = true;
-            gameover();
-        }
-    }, 1000);
+    var timeLeft = [10, 360, 240];
+    //Original time to start the timer from
+    var start = new Date();
+    //Only allows for one timer to run at a time
+    if (tmrCount == 0) {
+        //Counts down from the time selected by the difficulty
+        tmr = setInterval(function () { $("#timer").text(parseInt((start - new Date()) / 1000) + timeLeft[diffNum] + " remaining"); }, 1000);
+        tmrCount = 1;
+    }
 }

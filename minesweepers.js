@@ -5,9 +5,10 @@ function home() {
     //Removes the home screen
     document.getElementById("game").style.display = "none";
     //Removes timer and resets it
-    clearTimeout(tmr);
     document.getElementById("timer").innerHTML = "";
-    tmrCount = 0;
+    // removes mine counter
+    document.getElementById("count").innerHTML = "";
+    curMine = 1;
 }
 //The game play
 function game() {
@@ -22,9 +23,7 @@ function game() {
     mines(diffCount);
     $("#count").html(0 + "/" + winNum);
     //Clears previous timer
-    clearTimeout(tmr);
     document.getElementById("timer").innerHTML = "";
-    tmrCount = 0;
     //Starts timer
     timer(diffCount);
 }
@@ -60,23 +59,24 @@ function valMine(mineId) {// validate the current mine
 
 // won game
 function gameWin() {
-  console.log("W"); //Sick indent @Knot (jk)
-    alert("Dub");
-    //Just listing it for ordering properly in the future
-    leaderInput();
-    //Back to the beginning
-    home();
+  console.log("W");
+  alert("Dub");
+  //Just listing it for ordering properly in the future
+  leaderInput();
+  //Back to the beginning
+  home();
 }
 
 
 // lost game
 function gameover() {
-  console.log("L"); //Sick indent @Knot (jk)
-    alert("You lost the game!");
-    //Just listing it for ordering properly in the future
-    leaderInput();
-    //Back to the beginning
-    home();
+  console.log("L");
+  alert("You lost the game!");
+  //Just listing it for ordering properly in the future
+  leaderInput();
+  //Back to the beginning
+  home();
+  
 }
 
 //Leader board, to look at it
@@ -124,7 +124,7 @@ function mines(diffNum) {
     winNum = minesNum[diffNum];
 
     //Puts 1 to the number of mines into the array
-    for (i = 1; i <= minesNum[diffNum]; i = i + 1) {// idk what to make of that comment @Knot
+    for (i = 1; i <= minesNum[diffNum]; i = i + 1) {// idk what to make of that comment @Knot // whats wrong with it @hliwudnew?
         minesOrder[i - 1] = i;
     }
 
@@ -156,20 +156,36 @@ function mines(diffNum) {
     });
 }
 //Timer globals
-//The timer
+//The timer's value and it's ID
 var tmr;
-//Keeps track of how many timers. Only allows one to run
+var intervalId
+//Keeps track of how many timers. Only allows one to run          @hliwudnew is this needed?
 var tmrCount = 0;
 //Timer
 function timer(diffNum) {
     //Each difficult in seconds from Easy - Hard(for now)
-    var timeLeft = [10, 360, 240];
+    var timeLeft = [5, 360, 240];
     //Original time to start the timer from
     var start = new Date();
+
+    $("#timer").text((start - new Date()) / 1000 + timeLeft[diffNum] + " remaining");// this is here to remove the 1s delay before it appears
+
     //Only allows for one timer to run at a time
-    if (tmrCount == 0) {
+    if (tmrCount == 0) {//                                                           @hliwudnew (related to above) is this if needed?
         //Counts down from the time selected by the difficulty
-        tmr = setInterval(function () { $("#timer").text(parseInt((start - new Date()) / 1000) + timeLeft[diffNum] + " remaining"); }, 1000);
+        intervalId = setInterval(function () {// this is scuffed in that im assuming neither of us completely know how it works, i assume some of this is redundant
+
+          //notes: parse int is there to cast it as an int, idk if this is the best way but it does work lol
+          // the intervalId wouldnt be needed if we named the function but like hey this works
+
+          $("#timer").text(parseInt((start - new Date()) / 1000) + timeLeft[diffNum] + " remaining");
+          tmr = parseInt((start - new Date()) / 1000) + timeLeft[diffNum];// this should hopefully actully update the variable
+          if(tmr <= -1) {// -1 cause otherwise it wont propagate the 0
+            tmr = 100;// yeah yeah this is scuffed but it works (stops multiple alerts from being made)
+            gameover();
+            clearInterval(intervalId);
+          }
+        }, 1000);
         tmrCount = 1;
     }
 }

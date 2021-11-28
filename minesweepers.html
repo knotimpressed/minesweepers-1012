@@ -10,11 +10,19 @@
     1. The mine sequence is kept from one game to the next, meaning if i lose on mine #9 i can restart from 9 again.ie reset mine sequence after each game.
     2. Need to add an end with gameover() when the timer reaches 0 (or -1 cause time delay)
     Notes: Im thinking the buttons should turn some very dim but "positive" colour when clicked
+    (cont): maybe move all the get elementbyid to jquery?
 
   Questions:
-  Do we need the "New Game" button? the "Home" one works pretty well I'd say, plus new game doesnt let you change the difficulty
-    @Knot I think it is fine to keep because it's like a re-scramble mechanic, so like if I can't fine one and I just want to try again it's faster'
+  None
+
   Extra stuff: change the new game button colour and shadow based on difficulty colour
+
+  Server side ideas:
+  copy code from minesweeper, instead of passing code back pass back array of mines, move mine randomization to server side and leave the rest here for now
+
+  then for the leaderboard, we can pass back an array of the top 5 scores, and just compare every submitted score either 
+  at the client side to the known values or more likely server side since we would have to anyways to know where it went in.
+
 -->
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
@@ -46,7 +54,7 @@
         <!--Home Screen-->
         <div id ="home" class="home">
             <div>
-                <button onclick = "game()" class="pretty">New Game</button><!--I now care @Knot-->
+                <button onclick = "game()" class="pretty">New Game</button><!--I now care @Knot // care about what exactly lol @hliwudnew-->
             </div>
             <button onclick = "leader()">Leaderboards</button>
             <button onclick = "help()">Help!</button>

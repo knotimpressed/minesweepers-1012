@@ -155,37 +155,37 @@ function mines(diffNum) {
       }); 
     });
 }
+
 //Timer globals
 //The timer's value and it's ID
 var tmr;
 var intervalId
-//Keeps track of how many timers. Only allows one to run          @hliwudnew is this needed?
-var tmrCount = 0;
+
 //Timer
-function timer(diffNum) {
-    //Each difficult in seconds from Easy - Hard(for now)
-    var timeLeft = [5, 360, 240];
+function timer(diffNum) { // this is scuffed in that im assuming neither of us completely know how it works, i assume some of this is redundant
+
     //Original time to start the timer from
     var start = new Date();
+    //Each difficulty in seconds from Easy - Hard(for now)
+    var timeLeft = [5, 360, 240];
 
     $("#timer").text((start - new Date()) / 1000 + timeLeft[diffNum] + " remaining");// this is here to remove the 1s delay before it appears
+    
+    //Counts down from the time selected by the difficulty
+    intervalId = setInterval(timerUpdate, 1000, start, diffNum); // this is BY FAR my least favourite feature, the other paramaters to pass have to be after for it to work
+}
 
-    //Only allows for one timer to run at a time
-    if (tmrCount == 0) {//                                                           @hliwudnew (related to above) is this if needed?
-        //Counts down from the time selected by the difficulty
-        intervalId = setInterval(function () {// this is scuffed in that im assuming neither of us completely know how it works, i assume some of this is redundant
+function timerUpdate(start, diffNum) {
 
-          //notes: parse int is there to cast it as an int, idk if this is the best way but it does work lol
-          // the intervalId wouldnt be needed if we named the function but like hey this works
-
-          $("#timer").text(parseInt((start - new Date()) / 1000) + timeLeft[diffNum] + " remaining");
-          tmr = parseInt((start - new Date()) / 1000) + timeLeft[diffNum];// this should hopefully actully update the variable
-          if(tmr <= -1) {// -1 cause otherwise it wont propagate the 0
-            tmr = 100;// yeah yeah this is scuffed but it works (stops multiple alerts from being made)
-            gameover();
-            clearInterval(intervalId);
-          }
-        }, 1000);
-        tmrCount = 1;
-    }
+  //notes: parse int is there to cast it as an int, idk if this is the best way but it does work lol
+  
+  //Each difficulty in seconds from Easy - Hard(for now)
+  var timeLeft = [5, 360, 240];
+  $("#timer").text(parseInt((start - new Date()) / 1000) + timeLeft[diffNum] + " remaining");
+  tmr = parseInt((start - new Date()) / 1000) + timeLeft[diffNum];// this should hopefully actully update the variable
+  if(tmr <= -1) {// -1 cause otherwise it wont propagate the 0
+    tmr = 100;// yeah yeah this is scuffed but it works (stops multiple alerts from being made)
+    gameover();
+    clearInterval(intervalId);// could use an Id here but this works as we only need one timer
+  }
 }

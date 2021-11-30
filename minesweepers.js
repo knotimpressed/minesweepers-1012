@@ -27,6 +27,8 @@ function game() {
   $("#count").html(0 + "/" + winNum);
   //Clears previous timer
   document.getElementById("timer").innerHTML = "";
+  clearInterval(intervalId);
+
   //Starts timer
   timer(diffCount);
 }

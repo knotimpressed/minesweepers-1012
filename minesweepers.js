@@ -8,14 +8,22 @@ function home() {
 
   // Noting this in case it matters, causes an error in the console becaue they are not defined immediately but it works so yeah
   document.getElementById("popUp").style.display = "none";
-  document.getElementById("back").remove();
-  document.getElementById("text").innerHTML = "";
+
+  // SCUFFED code solving a problem that shoudlnt exist, 
+  if(document.getElementById("back") != null){
+    document.getElementById("back").remove();
+  }
+  if(document.getElementById("text") != null){
+    document.getElementById("text").innerHTML = "";
+  }
+  
   //Removes timer and resets it
   document.getElementById("timer").innerHTML = "";
   // removes mine counter
   document.getElementById("count").innerHTML = "";
   curMine = 1;
 }
+
 //The game play
 function game() {
   //Removes the home Screen
@@ -77,9 +85,10 @@ function gameover() {
   alert("You lost the game!");
   //Just listing it for ordering properly in the future
   leaderInput();
+  console.log("mid of gameover");
   //Back to the beginning
   home();
-
+  console.log("end of gameover");
 }
 
 //Leader board, to look at it
@@ -207,7 +216,7 @@ function timerUpdate(start, diffNum) {
   tmr = parseInt((start - new Date()) / 1000) + timeLeft[diffNum];// this should hopefully actully update the variable
   if (tmr <= -1) {// -1 cause otherwise it wont propagate the 0
     tmr = 100;// yeah yeah this is scuffed but it works (stops multiple alerts from being made)
+    console.log(clearInterval(intervalId));
     gameover();
-    clearInterval(intervalId);// could use an Id here but this works as we only need one timer
   }
 }

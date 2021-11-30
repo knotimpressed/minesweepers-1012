@@ -111,8 +111,13 @@ button{
     z-index: 10;
     /*Need help Centering properly relative to the middle of the home screen*/
     position: absolute;
-    top: 9%;
+    top: 7%;
     left: 35%;
     width: 30%;
     height: 30%;
+}
+
+.name {
+    background-color:ghostwhite;
+    color: #DC2F02;
 }

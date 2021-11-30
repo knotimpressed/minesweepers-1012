@@ -13,11 +13,12 @@ function home() {
   document.getElementById("timer").innerHTML = "";
   // removes mine counter
   document.getElementById("count").innerHTML = "";
-  curMine = 1;
 }
 
 //The game play
 function game() {
+  //Resets Mine Count @knot moved the mine counter reset, so the leaderData gets the correct mine count
+    curMine = 1;
   //Removes the home Screen
   document.getElementById("home").style.display = "none";
   //Opens the game screen
@@ -77,33 +78,98 @@ function gameWin() {
 function gameover() {
   console.log("L");
   alert("You lost the game!");
-  //Just listing it for ordering properly in the future
-  leaderInput();
-  //Back to the beginning
+  //Back to the home screen
   home();
+  //Leader board inputs
+  leaderInput();
 }
-
+//Global Leader board variables
+// For simplisity is goes from left to right, easy - hard. And in each section the scores go from highest to lowest
+var leaderNames = [["Mike Ox", "Joe Mama", "Who?"], ["Sugondeez","Herobrine","Some Guy George"], ["Candice","Fitness","Your Mother"]];
+var leaderScores = [[10,7,3], [20,15,10], [30,20,10]];
 //Leader board, to look at it
 function leader() {
-  //Displays the popup box and it's content
-  document.getElementById("popUp").style.display = "block";
-  //Create the back button
-  var backButton = document.createElement("button");
-  $(backButton).attr("id", "back");
-  backButton.innerHTML = "Back";
-  $("#popUp").append(backButton);
-  document.getElementById("back").onclick = function () { removeButt("back"); home() };
+    //Displays the popup box and it's content
+    document.getElementById("popUp").style.display = "block";
+    //Creates the text element
+    var text = document.createElement("div");
+    $(text).attr("id", "text");
+    $("#popUp").append(text);
+    //Displays the leaderboard holders
+    let difficulty = ["Easy", "Medium", "Hard"];
+    for (i = 0; i < leaderNames.length; i = i + 1) {
+        document.getElementById("text").innerHTML = document.getElementById("text").innerHTML + "<br>" + difficulty[i];
+        for (j = 0; j < leaderNames.length; j = j + 1) {
+            document.getElementById("text").innerHTML = document.getElementById("text").innerHTML +"<br>" +leaderNames[i][j] +": " + leaderScores[i][j];
+        }
+    }
+    //Creates the back button
+    var backButton = document.createElement("button");
+    $(backButton).attr("id", "back");
+    backButton.innerHTML = "Back";
+    $("#popUp").append(backButton);
+    //Clears the screen
+    document.getElementById("back").onclick = function () { removeButt("back"); removeText("text"); home() };
+
 }
 
 // if you need this to remove other buttons just pass the class
 function removeButt (buttName){
   document.getElementById(buttName).remove();
-  document.getElementById("text").innerHTML = "";
 }
-
+// if you need this to remove other inputs just pass the class
+function removeIn(inputName) {
+    document.getElementById(inputName).remove();
+}
+// if you need this to remove other texts just pass the class
+function removeText(textName) {
+    document.getElementById(textName).remove();
+}
+// if you need this to remove other divs just pass the class
+function removeDiv(divName) {
+    document.getElementById(divName).remove();
+}
 //To input data into the leader board
 function leaderInput() {
-  alert("Leader Board input Placeholder");
+    //Displays the popup
+    document.getElementById("popUp").style.display = "block";
+    //Creates the text element
+    var text = document.createElement("div");
+    $(text).attr("id", "text");
+    $("#popUp").append(text);
+    var mineScore = curMine - 1; // No idea why this fixes the score output, but it does
+    document.getElementById("text").innerHTML = "Your Score" + "<br>" + mineScore;
+    //Creates a div for the name input
+    var nameDiv = document.createElement("div");
+    $(nameDiv).attr("id", "nameDiv");
+    $("#popUp").append(nameDiv);
+    //Displays the Name Input
+    var nameInput = document.createElement("input");
+    $(nameInput).attr("type", "text");
+    $(nameInput).attr("id", "name");
+    $(nameInput).attr("class", "name");
+    $("#nameDiv").append(nameInput);
+    //Displays input button
+    var inputButton = document.createElement("button");
+    $(inputButton).attr("id", "back");
+    inputButton.innerHTML = "Send Data";
+    $("#popUp").append(inputButton);
+    //Clears the screen and Calls the leader board data
+    document.getElementById("back").onclick = function () { leaderData(nameInput.value); removeButt("back"); removeText("text"); removeIn("name"); removeDiv("nameDiv"); home() };
+}
+//Leader Board Configurator
+function leaderData(name) {
+    //Runs through each place, ie 1 ,2 , 3
+    for (i = 0; i < leaderNames.length; i = i + 1) {
+        //Checks if the score is better than any in the difficulty
+        if (curMine -1 > leaderScores[diffCount][i]) {
+            //Replaces leader board with the new name and score
+            leaderNames[diffCount][i] = name;
+            leaderScores[diffCount][i] = curMine - 1;
+            //Leaves the loop in order to only take the highest ranking the score achieves
+            break;
+        }
+    }
 }
 //How to play the game
 function help() {
@@ -119,7 +185,8 @@ function help() {
   $(backButton).attr("id", "back");
   backButton.innerHTML = "Back";
   $("#popUp").append(backButton);
-  document.getElementById("back").onclick = function () { home() };
+  //Clears the screen
+  document.getElementById("back").onclick = function () { removeButt("back"); removeText("text"); home() };
 }
 //Difficulty Selection
 var diffCount = 0;
@@ -154,7 +221,7 @@ function mines(diffNum) {
   winNum = minesNum[diffNum];
 
   //Puts 1 to the number of mines into the array
-  for (i = 1; i <= minesNum[diffNum]; i = i + 1) {// idk what to make of that comment @Knot // whats wrong with it @hliwudnew?
+  for (i = 1; i <= minesNum[diffNum]; i = i + 1) {
     minesOrder[i - 1] = i;
   }
 
@@ -197,7 +264,7 @@ function timer(diffNum) { // this is scuffed in that im assuming neither of us c
   //Original time to start the timer from
   var start = new Date();
   //Each difficulty in seconds from Easy - Hard(for now)
-  var timeLeft = [5, 360, 240];
+  var timeLeft = [10, 360, 240];
 
   $("#timer").text((start - new Date()) / 1000 + timeLeft[diffNum] + " remaining");// this is here to remove the 1s delay before it appears
 
@@ -210,7 +277,7 @@ function timerUpdate(start, diffNum) {
   //notes: parse int is there to cast it as an int, idk if this is the best way but it does work lol
 
   //Each difficulty in seconds from Easy - Hard(for now)
-  var timeLeft = [5, 360, 240];
+  var timeLeft = [10, 360, 240];
   $("#timer").text(parseInt((start - new Date()) / 1000) + timeLeft[diffNum] + " remaining");
   tmr = parseInt((start - new Date()) / 1000) + timeLeft[diffNum];// this should hopefully actully update the variable
   if (tmr <= -1) {// -1 cause otherwise it wont propagate the 0

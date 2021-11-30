@@ -34,49 +34,50 @@
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <!--Links-->
-    <link rel="stylesheet" type="text/css" href="minesweepers.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="minesweepers.js"></script>
-    <meta charset="utf-8" />
-    <title>Mines</title>
+  <!--Links-->
+  <link rel="stylesheet" type="text/css" href="minesweepers.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="minesweepers.js"></script>
+  <meta charset="utf-8" />
+  <title>Mines</title>
 </head>
 <!--Body-->
+
 <body onload="home()">
-    <div id="content" class="content">
-        <!--Header-->
-        <header>
-            <div class="headright">
-                <button onclick="home()">Home</button>
-            </div>
-            <h1>Mine-sequence</h1>
-            <h2 id="count"></h2>
-            <!--Header Buttons-->
-            <div class="headmiddle">
-                <button onclick="game()">New Game</button>
-            </div>
-            <!--Timer-->
-            <div id="timer"></div>
-        </header>
-        <!--Home Screen-->
-        <div id="home" class="home">
-            <div>
-                <button onclick="game()" class="pretty">New Game</button><!--I now care @Knot // care about what exactly lol @hliwudnew-->
-            </div>
-            <button onclick="leader()">Leaderboards</button>
-            <button onclick="help()">Help!</button>
-            <button class="diff" id="diff" onclick="difficulty()">Easy</button>
-        </div>
-        <!--Game Screen-->
-        <div id="game" class="game">
-        </div>
-        <!--Footer-->
-        <footer>
-            EECS 1012: Luke D, Gabriel H, 2021
-        </footer>
+  <div id="content" class="content">
+    <!--Header-->
+    <header>
+      <div class="headright">
+        <button onclick="home()">Home</button>
+      </div>
+      <h1>Mine-sequence</h1>
+      <h2 id="count"></h2>
+      <!--Header Buttons-->
+      <div class="headmiddle">
+        <button onclick="game()">New Game</button>
+      </div>
+      <!--Timer-->
+      <div id="timer"></div>
+    </header>
+    <!--Home Screen-->
+    <div id="home" class="home">
+      <div>
+        <button onclick="game()" class="pretty">New Game</button>
+      </div>
+      <button onclick="leader()">Leaderboards</button>
+      <button onclick="help()">Help!</button>
+      <button class="diff" id="diff" onclick="difficulty()">Easy</button>
     </div>
-    <!--Pop ups-->
-    <div id="popUp" class="popUp">
+    <!--Game Screen-->
+    <div id="game" class="game">
     </div>
+    <!--Footer-->
+    <footer>
+      EECS 1012: Luke D, Gabriel H, 2021
+    </footer>
+  </div>
+  <!--Pop ups-->
+  <div id="popUp" class="popUp">
+  </div>
 </body>
 </html>

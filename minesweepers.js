@@ -8,14 +8,6 @@ function home() {
 
   // Noting this in case it matters, causes an error in the console becaue they are not defined immediately but it works so yeah
   document.getElementById("popUp").style.display = "none";
-
-  // SCUFFED code solving a problem that shoudlnt exist, 
-  if(document.getElementById("back") != null){
-    document.getElementById("back").remove();
-  }
-  if(document.getElementById("text") != null){
-    document.getElementById("text").innerHTML = "";
-  }
   
   //Removes timer and resets it
   document.getElementById("timer").innerHTML = "";
@@ -85,10 +77,8 @@ function gameover() {
   alert("You lost the game!");
   //Just listing it for ordering properly in the future
   leaderInput();
-  console.log("mid of gameover");
   //Back to the beginning
   home();
-  console.log("end of gameover");
 }
 
 //Leader board, to look at it
@@ -100,8 +90,15 @@ function leader() {
   $(backButton).attr("id", "back");
   backButton.innerHTML = "Back";
   $("#popUp").append(backButton);
-  document.getElementById("back").onclick = function () { home() };
+  document.getElementById("back").onclick = function () { removeButt("back"); home() };
 }
+
+// if you need this to remove other buttons just pass the class
+function removeButt (buttName){
+  document.getElementById(buttName).remove();
+  document.getElementById("text").innerHTML = "";
+}
+
 //To input data into the leader board
 function leaderInput() {
   alert("Leader Board input Placeholder");
@@ -216,7 +213,7 @@ function timerUpdate(start, diffNum) {
   tmr = parseInt((start - new Date()) / 1000) + timeLeft[diffNum];// this should hopefully actully update the variable
   if (tmr <= -1) {// -1 cause otherwise it wont propagate the 0
     tmr = 100;// yeah yeah this is scuffed but it works (stops multiple alerts from being made)
-    console.log(clearInterval(intervalId));
+    clearInterval(intervalId);
     gameover();
   }
 }

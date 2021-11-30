@@ -4,6 +4,12 @@ function home() {
     document.getElementById("home").style.display = "block";
     //Removes the home screen
     document.getElementById("game").style.display = "none";
+    //Removes the popups
+
+    // Noting this in case it matters, causes an error in the console becaue they are not defined immediately but it works so yeah
+    document.getElementById("popUp").style.display = "none";
+    document.getElementById("back").remove();
+    document.getElementById("text").innerHTML = "";
     //Removes timer and resets it
     document.getElementById("timer").innerHTML = "";
     // removes mine counter
@@ -16,9 +22,6 @@ function game() {
     document.getElementById("home").style.display = "none";
     //Opens the game screen
     document.getElementById("game").style.display = "block";
-    //Switches the background
-    //document.getElementById("content").style.background = "#0F0F0F";
-    //document.getElementById("content").style.backgroundSize = "cover";
     //Mines
     mines(diffCount);
     $("#count").html(0 + "/" + winNum);
@@ -81,7 +84,14 @@ function gameover() {
 
 //Leader board, to look at it
 function leader() {
-    alert("Leader Board Placeholder");
+    //Displays the popup box and it's content
+    document.getElementById("popUp").style.display = "block";
+    //Create the back button
+    var backButton = document.createElement("button");
+    $(backButton).attr("id", "back");
+    backButton.innerHTML = "Back";
+    $("#popUp").append(backButton);
+    document.getElementById("back").onclick = function () { home() };
 }
 //To input data into the leader board
 function leaderInput() {
@@ -89,7 +99,19 @@ function leaderInput() {
 }
 //How to play the game
 function help() {
-    alert("How To Play:\n 1. The goal of the game is to click each mine in order from 1 - 100.\n 2. Losing is caused by not clicking the correct mine or running out of time. \n 3. To win you must click every mine in order before time runs out! \n 4. Good Luck!");
+    //Displays the popup box and it's content
+    document.getElementById("popUp").style.display = "block";
+    //Creates the instructions
+    var text = document.createElement("div");
+    $(text).attr("id", "text");
+    $("#popUp").append(text);
+    document.getElementById("text").innerHTML = "How To Play: " + "<br>" + " 1. The goal of the game is to click each mine in order from 1 - 100." + "<br>" + " 2. Losing is caused by not clicking the correct mine or running out of time. " + "<br>" + " 3. To win you must click every mine in order before time runs out!" + "<br>" + "4. Good Luck!";
+    //Create the back button
+    var backButton = document.createElement("button");
+    $(backButton).attr("id", "back");
+    backButton.innerHTML = "Back";
+    $("#popUp").append(backButton);
+    document.getElementById("back").onclick = function() { home() };
 }
 //Difficulty Selection
 var diffCount = 0;

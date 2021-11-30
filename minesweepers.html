@@ -8,7 +8,7 @@
 
   Current Bugs/Fixes needed:
 
-    none 😎
+    1. timer doesn't work, goes negative, and is able to duplicate, no idea why or how, all i did was check it and it was messed, unless I edited it on accident @Knot
 
     Notes: Im thinking the buttons should turn some very dim but "positive" colour when clicked
     (cont): maybe move all the get elementbyid to jquery?
@@ -41,37 +41,40 @@
 </head>
 <!--Body-->
 <body onload="home()">
-    <div id ="content" class="content">
+    <div id="content" class="content">
         <!--Header-->
         <header>
             <div class="headright">
-              <button onclick = "home()">Home</button>
+                <button onclick="home()">Home</button>
             </div>
             <h1>Mine-sequence</h1>
-            <h2 id = "count"></h2>
+            <h2 id="count"></h2>
             <!--Header Buttons-->
             <div class="headmiddle">
-              <button onclick = "game()">New Game</button>
+                <button onclick="game()">New Game</button>
             </div>
             <!--Timer-->
             <div id="timer"></div>
         </header>
         <!--Home Screen-->
-        <div id ="home" class="home">
+        <div id="home" class="home">
             <div>
-                <button onclick = "game()" class="pretty">New Game</button><!--I now care @Knot // care about what exactly lol @hliwudnew-->
+                <button onclick="game()" class="pretty">New Game</button><!--I now care @Knot // care about what exactly lol @hliwudnew-->
             </div>
-            <button onclick = "leader()">Leaderboards</button>
-            <button onclick = "help()">Help!</button>
-            <button class="diff" id ="diff" onclick = "difficulty()">Easy</button>
+            <button onclick="leader()">Leaderboards</button>
+            <button onclick="help()">Help!</button>
+            <button class="diff" id="diff" onclick="difficulty()">Easy</button>
         </div>
         <!--Game Screen-->
-        <div id ="game" class="game">
+        <div id="game" class="game">
         </div>
         <!--Footer-->
         <footer>
-           EECS 1012: Luke D, Gabriel H, 2021
+            EECS 1012: Luke D, Gabriel H, 2021
         </footer>
+    </div>
+    <!--Pop ups-->
+    <div id="popUp" class="popUp">
     </div>
 </body>
 </html>

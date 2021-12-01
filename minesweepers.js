@@ -76,6 +76,7 @@ function gameWin() {
 
 // lost game
 function gameover() {
+  clearInterval(intervalId);
   console.log("L");
   alert("You lost the game!");
   //Back to the home screen

@@ -57,6 +57,7 @@ app.post('/post', (req, res) => {
 console.log("Server is running!");
 
 function generateMines(diffNum) {
+  console.log("generateMines");
   //generate code
   
   //difficulties

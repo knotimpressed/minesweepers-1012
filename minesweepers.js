@@ -1,5 +1,7 @@
 var url = "http://localhost:3000/post";
 
+var minesNum = [25, 50, 100];// this is global now, makes it easier to change too
+
 //Home Screen
 function home() {
   //Opens the game Screen
@@ -27,7 +29,7 @@ function game() {
   document.getElementById("game").style.display = "block";
   //Mines
   mines(diffCount);
-  $("#count").html(0 + "/" + winNum);
+  $("#count").html(0 + "/" + minesNum[diffCount]);
   //Clears previous timer
   document.getElementById("timer").innerHTML = "";
   clearInterval(intervalId);
@@ -57,9 +59,9 @@ function valMine(mineId) {// validate the current mine
     gameover();
   }
 
-  $("#count").html(curMine - 1 + "/" + winNum);
+  $("#count").html(curMine - 1 + "/" + minesNum[diffCount]);
 
-  if (curMine == winNum + 1) {
+  if (curMine == minesNum[diffCount] + 1) {
     won = true;
     gameWin();
   }
@@ -215,7 +217,6 @@ function difficulty() {
 }
 
 //Random Mine Number Generation
-var winNum; // this is sloppy but its the easiest way to pass the winning mine number
 var minesRandom; // this is global to work with the function, SLOPPY
 function mines(diffNum) {
   getMines(diffNum);
@@ -279,8 +280,6 @@ function response(data, status){
     console.log(minesRandom);
 
     // this is here so it only runs once we get the responce
-    //difficulties
-    var minesNum = [25, 50, 100];
 
     $("#game").html("");// clears previous mines
     // Generates mines

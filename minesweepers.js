@@ -158,6 +158,7 @@ function leaderInput() {
     //Clears the screen and Calls the leader board data
     document.getElementById("back").onclick = function () { leaderData(nameInput.value); removeButt("back"); removeText("text"); removeIn("name"); removeDiv("nameDiv"); home() };
 }
+
 //Leader Board Configurator
 function leaderData(name) {
     //Runs through each place, ie 1 ,2 , 3
@@ -172,6 +173,7 @@ function leaderData(name) {
         }
     }
 }
+
 //How to play the game
 function help() {
   //Displays the popup box and it's content
@@ -209,6 +211,7 @@ function difficulty() {
     document.getElementById("diff").style.background = "#DC2F02";
   }
 }
+
 //Random Mine Number Generation
 var winNum;// this is sloppy but its the easiest way to pass the winning mine number
 function mines(diffNum) {
@@ -232,6 +235,10 @@ function mines(diffNum) {
     minesRandom.push(minesOrder[randIndex]);// push the random number onto the random array
     minesOrder.splice(randIndex, 1);// remove the randomly selected mine, shift the rest
   }
+
+
+  // SERVER SIDE STUFF NEEDS minesRandom
+
 
   $("#game").html("");// clears previous mines
   // Generates mines

@@ -1,3 +1,5 @@
+var url = "http://localhost:3000/post";
+
 //Home Screen
 function home() {
   //Opens the game Screen
@@ -213,52 +215,10 @@ function difficulty() {
 }
 
 //Random Mine Number Generation
-var winNum;// this is sloppy but its the easiest way to pass the winning mine number
+var winNum; // this is sloppy but its the easiest way to pass the winning mine number
+var minesRandom; // this is global to work with the function, SLOPPY
 function mines(diffNum) {
-  //difficulties
-  var minesNum = [25, 50, 100];
-  //Gets all numbers from 1 - minesNum[num] and puts the into the array
-  var minesOrder = [];
-  //Array of randomized mines
-  var minesRandom = [];
-  var l = minesOrder.length;
-  winNum = minesNum[diffNum];
-
-  //Puts 1 to the number of mines into the array
-  for (i = 1; i <= minesNum[diffNum]; i = i + 1) {
-    minesOrder[i - 1] = i;
-  }
-
-  // fills array of random mine numbers
-  for (var l = 0; l < minesNum[diffNum]; l++) {
-    var randIndex = Math.floor(Math.random() * (minesOrder.length));// generate a random (valid) index
-    minesRandom.push(minesOrder[randIndex]);// push the random number onto the random array
-    minesOrder.splice(randIndex, 1);// remove the randomly selected mine, shift the rest
-  }
-
-
-  // SERVER SIDE STUFF NEEDS minesRandom
-
-
-  $("#game").html("");// clears previous mines
-  // Generates mines
-  for (i = 0; i < minesNum[diffNum]; i++) {
-    var board = document.getElementById("game");
-    var mines = document.createElement("input");
-    $(mines).attr("type", "button");
-    $(mines).attr("name", minesRandom[i]);
-    $(mines).attr("value", minesRandom[i]);
-    $(mines).attr("class", "mine");
-    $(mines).attr("id", "mine" + minesRandom[i]);
-    //Puts the mines within the game area
-    board.appendChild(mines);
-  }
-  //validate the mine when its clicked
-  $(document).ready(function () {// yes i stole this(ish), no i dont know how it works
-    $(".mine").click(function () {
-      valMine(this.id);
-    });
-  });
+  getMines(diffNum);
 }
 
 //Timer globals
@@ -292,5 +252,65 @@ function timerUpdate(start, diffNum) {
     tmr = 100;// yeah yeah this is scuffed but it works (stops multiple alerts from being made)
     clearInterval(intervalId);
     gameover();
+  }
+}
+
+function getMines(diffNum){
+  //send request to server to start a new game.
+  $.post(url+'?data='+JSON.stringify({
+                  'action':'generateMines',
+                  'diffNum': diffNum
+                }),
+         response);
+  
+}
+
+/*
+ * Event handler for server's response
+ * @param data is the json format string sent from the server
+ */
+function response(data, status){
+  var response = JSON.parse(data);
+  console.log(data);
+  if (response['action'] == 'generateMines'){
+    minesRandom = response['mines'];
+    console.log("minesRandom:" + minesRandom);
+
+    console.log(minesRandom);
+
+    // this is here so it only runs once we get the responce
+    //difficulties
+    var minesNum = [25, 50, 100];
+
+    $("#game").html("");// clears previous mines
+    // Generates mines
+    for (i = 0; i < minesNum[diffCount]; i++) {
+      var board = document.getElementById("game");
+      var mines = document.createElement("input");
+      $(mines).attr("type", "button");
+      $(mines).attr("name", minesRandom[i]);
+      $(mines).attr("value", minesRandom[i]);
+      $(mines).attr("class", "mine");
+      $(mines).attr("id", "mine" + minesRandom[i]);
+      //Puts the mines within the game area
+      board.appendChild(mines);
+    }
+    //validate the mine when its clicked
+    $(document).ready(function () {// yes i stole this(ish), no i dont know how it works
+      $(".mine").click(function () {
+        valMine(this.id);
+      });
+    });
+  } 
+  
+  else if (response['action'] == 'evaluate'){ // THIS IS FOR LEADERBOARD STUFF
+      // acttion: Evaluate
+      // after receiving the server's response, 
+      // then make the button <div> visible
+      var win = response['win'];
+      var num_match = response['num_match'];
+      var num_containing = response['num_containing'];
+      var num_not_in = response['num_not_in'];
+      var code = response['code']
   }
 }

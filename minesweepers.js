@@ -218,8 +218,8 @@ function difficulty() {
 
 //Random Mine Number Generation
 var minesRandom; // this is global to work with the function, SLOPPY
-function mines(diffNum) {
-  getMines(diffNum);
+function mines(diffCount) {
+  getMines(diffCount);
 }
 
 //Timer globals
@@ -228,27 +228,27 @@ var tmr;
 var intervalId
 
 //Timer
-function timer(diffNum) { // this is scuffed in that im assuming neither of us completely know how it works, i assume some of this is redundant
+function timer(diffCount) { // this is scuffed in that im assuming neither of us completely know how it works, i assume some of this is redundant
 
   //Original time to start the timer from
   var start = new Date();
   //Each difficulty in seconds from Easy - Hard(for now)
   var timeLeft = [10, 360, 240];
 
-  $("#timer").text((start - new Date()) / 1000 + timeLeft[diffNum] + " remaining");// this is here to remove the 1s delay before it appears
+  $("#timer").text((start - new Date()) / 1000 + timeLeft[diffCount] + " remaining");// this is here to remove the 1s delay before it appears
 
   //Counts down from the time selected by the difficulty
-  intervalId = setInterval(timerUpdate, 1000, start, diffNum); // this is BY FAR my least favourite feature, the other paramaters to pass have to be after for it to work
+  intervalId = setInterval(timerUpdate, 1000, start, diffCount); // this is BY FAR my least favourite feature, the other paramaters to pass have to be after for it to work
 }
 
-function timerUpdate(start, diffNum) {
+function timerUpdate(start, diffCount) {
 
   //notes: parse int is there to cast it as an int, idk if this is the best way but it does work lol
 
   //Each difficulty in seconds from Easy - Hard(for now)
   var timeLeft = [10, 360, 240];
-  $("#timer").text(parseInt((start - new Date()) / 1000) + timeLeft[diffNum] + " remaining");
-  tmr = parseInt((start - new Date()) / 1000) + timeLeft[diffNum];// this should hopefully actully update the variable
+  $("#timer").text(parseInt((start - new Date()) / 1000) + timeLeft[diffCount] + " remaining");
+  tmr = parseInt((start - new Date()) / 1000) + timeLeft[diffCount];// this should hopefully actully update the variable
   if (tmr <= -1) {// -1 cause otherwise it wont propagate the 0
     tmr = 100;// yeah yeah this is scuffed but it works (stops multiple alerts from being made)
     clearInterval(intervalId);
@@ -256,11 +256,11 @@ function timerUpdate(start, diffNum) {
   }
 }
 
-function getMines(diffNum){
+function getMines(diffCount){
   //send request to server to start a new game.
   $.post(url+'?data='+JSON.stringify({
                   'action':'generateMines',
-                  'diffNum': diffNum
+                  'diffNum': diffCount
                 }),
          response);
   

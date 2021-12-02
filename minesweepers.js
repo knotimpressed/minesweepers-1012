@@ -36,6 +36,8 @@ function game() {
 
   //Starts timer
   timer(diffCount);
+
+  //Creates a back button
 }
 // game global variables, there here because this will likely change as we move to server-client
 
@@ -69,12 +71,12 @@ function valMine(mineId) {// validate the current mine
 
 // won game
 function gameWin() {
+  clearInterval(intervalId);
   console.log("W");
-  alert("Dub");
-  //Just listing it for ordering properly in the future
-  leaderInput();
   //Back to the beginning
   home();
+  //Leader board inputs
+  leaderInput();
 }
 
 

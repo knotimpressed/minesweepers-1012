@@ -109,7 +109,6 @@ button{
     border-style: solid;
     border-color: lightgrey;
     z-index: 10;
-    /*Need help Centering properly relative to the middle of the home screen*/
     position: absolute;
     top: 7%;
     left: 35%;
@@ -118,6 +117,8 @@ button{
 }
 
 .name {
-    background-color:ghostwhite;
+    background-color: ghostwhite;
     color: #DC2F02;
+    font-family: "Courier New", monospace;
+    margin-bottom: 4px;
 }

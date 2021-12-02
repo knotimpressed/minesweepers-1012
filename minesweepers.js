@@ -82,7 +82,6 @@ function gameWin() {
 function gameover() {
   clearInterval(intervalId);
   console.log("L");
-  alert("You lost the game!");
   //Back to the home screen
   home();
   //Leader board inputs
@@ -100,11 +99,15 @@ function leader() {
     var text = document.createElement("div");
     $(text).attr("id", "text");
     $("#popUp").append(text);
-    //Displays the leaderboard holders
+    //Used for the coloring and medals of each leaderboard holder
     let difficulty = ["Easy", "Medium", "Hard"];
+    let diffColor = ["#03F7EB", "F48C06", "DC2F02"];
+    //Prints out the leader board
     for (i = 0; i < leaderNames.length; i = i + 1) {
-        document.getElementById("text").innerHTML = document.getElementById("text").innerHTML + "<br>" + difficulty[i];
+        //Sets up each difficult leaderboard
+        document.getElementById("text").innerHTML = document.getElementById("text").innerHTML + "<br>" + "<u>" + difficulty[i].fontcolor(diffColor[i]) + "</u>";
         for (j = 0; j < leaderNames.length; j = j + 1) {
+            //Prints out the leaders and their scores
             document.getElementById("text").innerHTML = document.getElementById("text").innerHTML +"<br>" +leaderNames[i][j] +": " + leaderScores[i][j];
         }
     }

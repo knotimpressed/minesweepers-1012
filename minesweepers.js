@@ -33,11 +33,8 @@ function game() {
   //Clears previous timer
   document.getElementById("timer").innerHTML = "";
   clearInterval(intervalId);
-
   //Starts timer
   timer(diffCount);
-
-  //Creates a back button
 }
 // game global variables, there here because this will likely change as we move to server-client
 

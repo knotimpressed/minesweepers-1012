@@ -173,7 +173,7 @@ function leaderInput() {
     inputButton.innerHTML = "Send Data";
     $("#popUp").append(inputButton);
     //Clears the screen and Calls the leader board data
-    document.getElementById("back").onclick = function () { leaderData(nameInput.value); removeButt("back"); removeText("text"); removeIn("name"); removeDiv("nameDiv"); home() };
+    document.getElementById("back").onclick = function () { leaderData(nameInput.value); removeButt("back"); removeText("text"); removeIn("name"); removeDiv("nameDiv"); home(); leader() };
 }
 
 //Leader Board Configurator

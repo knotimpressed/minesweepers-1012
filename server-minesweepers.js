@@ -1,9 +1,12 @@
-// in general this code sucks cause we dont need to keep all the mines stored, however it does work
-
-
 var express = require('express');
 var app = express();
 var mines = [];
+
+//Global Leader board variables
+// For simplisity is goes from left to right, easy - hard. And in each section the scores go from highest to lowest
+var leaderNames = [["Mike SERVER's Ox", "Joe Mama", "Who?"], ["Sugondeez","Herobrine","Some Guy George"], ["Candice","Fitness","Your Mother"]];
+var leaderScores = [[10, 7, 3], [20, 15, 10], [30, 20, 10]];
+var leaderTimes = [["6:12", "5:11", "4:10"], ["5:07", "3:11", "2:10"], ["3:17", "2:10", "1:32"]];
 
 app.post('/post', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -27,26 +30,16 @@ app.post('/post', (req, res) => {
         // send the response while including the JSON text		
         res.send(jsontext);
     } 
-    else if (postData['action'] == "evaluate") {
-        //evaluate the attempt_code for this user
-        var [num_match, num_containing, num_not_in]
-            = evaluate(codes[postData['name']], postData['attempt_code']);
+    else if (postData['action'] == "leader") {
+        
+      var name = postData['name'];
+      var timeLeft = postData['timeLeft'];
+      var tmrHolder = postData['tmrHolder'];
+      var curMine = postData['curMine'];
+      var diffCount = postData['diffCount'];
 
-        var answer = [];
-        if ((num_match == code_length) || (num_attempts == postData["current_attempt_id"]))
-            answer = codes[postData['name']];
-
-        var win = false;
-        if (num_match == code_length) win = true;
-
-        var jsontext = JSON.stringify({
-          'action': 'evaluate',
-          'win': win,
-          'num_match': num_match,
-          'num_containing': num_containing,
-          'num_not_in': num_not_in,
-          'code': answer
-        });
+      var jsontext = updateLeader(name, timeLeft, tmrHolder, curMine, diffCount);
+      //evaluate the attempt_code for this user
         console.log(jsontext);
         res.send(jsontext);
     } 
@@ -83,4 +76,55 @@ function generateMines(diffNum) {
 
   //store the code for this client
   return(minesRandom);
+}
+
+function updateLeader(name, timeLeft, tmrHolder, curMine, diffCount) {
+    //Converts the time from time left to time used, and puts it into minutes and seconds
+    var m = timeLeft[diffCount]/60 - (Math.ceil(tmrHolder / 60));
+    var s = 60 - (tmrHolder % 60);
+    //Used to temp store the seconds of the leaders
+    var leaderSecHolder = [];
+    //Gets the seconds and minutes of each of the leaders in the selected difficulty in the leaderboard
+    for (i = 0; i < leaderTimes.length; i = i + 1) {
+        //leaderSecHolder[i] = parseInt(leaderTimes[diffCount][i].slice(2));
+        //leaderMinHolder[i] = parseInt(leaderTimes[diffCount][i].charAt(0));// only works up to 9:59
+
+        leaderSecHolder[i] = parseInt(leaderTimes[diffCount][i].slice(2));
+        leaderSecHolder[i] += 60*(parseInt(leaderTimes[diffCount][i].charAt(0)));// only works up to 9:59
+        console.log(leaderSecHolder[i]);
+    }
+    //Runs through each place, ie 1 ,2 , 3
+    for (i = 0; i < leaderNames.length; i = i + 1) {
+        //Checks if the score is better than any in the difficulty
+        // Will put on leader if the score has more mines,  will put on leader if they took less time: total seconds check
+        //if (curMine - 1 > leaderScores[diffCount][i] || (curMine - 1 == leaderScores[diffCount][i] && (m < leaderMinHolder[i])) || leaderScores[diffCount][i] && (m == leaderMinHolder[i] && s < leaderSecHolder[i])) {
+          if (curMine - 1 > leaderScores[diffCount][i] || (curMine - 1 == leaderScores[diffCount][i] && (((m*60)+s) <= leaderSecHolder[i]))) {
+          // Replaces leader board with the new name and score, bumps down
+            if(i + 1 <= 2) {
+              leaderNames[diffCount][i+1] = leaderNames[diffCount][i];
+              leaderScores[diffCount][i+1] = leaderScores[diffCount][i];
+            }
+
+            leaderNames[diffCount][i] = name;
+            leaderScores[diffCount][i] = curMine - 1;
+            if (s % 100 < 10) {
+                leaderTimes[diffCount][i] = (m + ":0" + s).toString();
+            }
+            else {
+                leaderTimes[diffCount][i] = (m + ":" + s).toString();
+            }
+            //Leaves the loop in order to only take the highest ranking the score achieves
+            break;
+        }
+    }
+    console.log(leaderNames);
+    console.log(leaderScores);
+    console.log(leaderTimes);
+
+    return(JSON.stringify({
+      'action': 'leader',
+      'leaderNames': leaderNames,
+      'leaderScores': leaderScores,
+      'leaderTimes': leaderTimes
+    }));
 }

@@ -18,6 +18,8 @@ function home() {
   document.getElementById("timer").innerHTML = "";
   // removes mine counter
   document.getElementById("count").innerHTML = "";
+
+  leaderData("admin", 1);// update leaderboard by submitting a very low score
 }
 
 //The game play
@@ -96,11 +98,13 @@ function gameover() {
   //Leader board inputs
   leaderInput();
 }
-//Global Leader board variables
-// For simplisity is goes from left to right, easy - hard. And in each section the scores go from highest to lowest
+
+//Global Leader board variables, not really needed but here so it all works
+// For simplicity is goes from left to right, easy - hard. And in each section the scores go from highest to lowest
 var leaderNames = [["Mike Ox", "Joe Mama", "Who?"], ["Sugondeez","Herobrine","Some Guy George"], ["Candice","Fitness","Your Mother"]];
 var leaderScores = [[10, 7, 3], [20, 15, 10], [30, 20, 10]];
 var leaderTimes = [["6:12", "5:11", "4:10"], ["5:07", "3:11", "2:10"], ["3:17", "2:10", "1:32"]];
+
 //Leader board, to look at it
 function leader() {
     //Displays the popup box and it's content
@@ -175,54 +179,31 @@ function leaderInput() {
     inputButton.innerHTML = "Send Data";
     $("#popUp").append(inputButton);
     //Clears the screen and Calls the leader board data
-    document.getElementById("back").onclick = function () { leaderData(nameInput.value); removeButt("back"); removeText("text"); removeIn("name"); removeDiv("nameDiv"); home(); leader() };
+    document.getElementById("back").onclick = function () { 
+      leaderData(nameInput.value, curMine); 
+      removeButt("back"); removeText("text"); 
+      removeIn("name"); 
+      removeDiv("nameDiv"); 
+      home()
+      //leader()// listen this could be here but just so we dont have to deal with JS's async stuff its not
+    };
 }
 
 //Leader Board Configurator
-function leaderData(name) {
+function leaderData(name, curMineLead) {
 
-    // HENDERSON NOTE: Change the leaderboard to display time used, not time left
+    //inputs are name, timeleft, tmrholder, curmine
+    // for leader display use this with no name and no score
 
-
-    //Converts the time from time left to time used, and puts it into minutes and seconds
-    var m = timeLeft[diffCount]/60 - (Math.ceil(tmrHolder / 60));
-    var s = 60 - (tmrHolder % 60);
-    //Used to temp store the seconds and minutes of the leaders
-    var leaderMinHolder = [];
-    var leaderSecHolder = [];
-    //Gets the seconds and minutes of each of the leaders in the selected difficulty in the leaderboard
-    for (i = 0; i < leaderTimes.length; i = i + 1) {
-        //leaderSecHolder[i] = parseInt(leaderTimes[diffCount][i].slice(2));
-        //leaderMinHolder[i] = parseInt(leaderTimes[diffCount][i].charAt(0));// only works up to 9:59
-
-        leaderSecHolder[i] = parseInt(leaderTimes[diffCount][i].slice(2));
-        leaderSecHolder[i] += 60*(parseInt(leaderTimes[diffCount][i].charAt(0)));// only works up to 9:59
-        console.log(leaderSecHolder[i]);
-    }
-    //Runs through each place, ie 1 ,2 , 3
-    for (i = 0; i < leaderNames.length; i = i + 1) {
-        //Checks if the score is better than any in the difficulty
-        // Will put on leader if the score has more mines,  will put on leader if they took less time: total seconds check
-        //if (curMine - 1 > leaderScores[diffCount][i] || (curMine - 1 == leaderScores[diffCount][i] && (m < leaderMinHolder[i])) || leaderScores[diffCount][i] && (m == leaderMinHolder[i] && s < leaderSecHolder[i])) {
-          if (curMine - 1 > leaderScores[diffCount][i] || (curMine - 1 == leaderScores[diffCount][i] && (((m*60)+s) <= leaderSecHolder[i]))) {
-          // Replaces leader board with the new name and score, bumps down
-            if(i + 1 <= 2) {
-              leaderNames[diffCount][i+1] = leaderNames[diffCount][i];
-              leaderScores[diffCount][i+1] = leaderScores[diffCount][i];
-            }
-
-            leaderNames[diffCount][i] = name;
-            leaderScores[diffCount][i] = curMine - 1;
-            if (s % 100 < 10) {
-                leaderTimes[diffCount][i] = (m + ":0" + s).toString();
-            }
-            else {
-                leaderTimes[diffCount][i] = (m + ":" + s).toString();
-            }
-            //Leaves the loop in order to only take the highest ranking the score achieves
-            break;
-        }
-    }
+    $.post(url+'?data='+JSON.stringify({
+      'action':'leader',
+      'name': name,
+      'timeLeft': timeLeft,
+      'tmrHolder': tmrHolder,
+      'curMine': curMineLead,
+      'diffCount': diffCount
+    }),
+    response);
 }
 
 //How to play the game
@@ -372,14 +353,10 @@ function response(data, status){
     });
   } 
   
-  else if (response['action'] == 'evaluate'){ // THIS IS FOR LEADERBOARD STUFF
-      // acttion: Evaluate
-      // after receiving the server's response, 
-      // then make the button <div> visible
-      var win = response['win'];
-      var num_match = response['num_match'];
-      var num_containing = response['num_containing'];
-      var num_not_in = response['num_not_in'];
-      var code = response['code']
+  else if (response['action'] == 'leader'){ // THIS IS FOR LEADERBOARD STUFF
+      leaderNames = response['leaderNames'];
+      leaderScores = response['leaderScores'];
+      leaderTimes = response['leaderTimes'];
+
   }
 }

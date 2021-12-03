@@ -178,19 +178,30 @@ function leaderInput() {
 
 //Leader Board Configurator
 function leaderData(name) {
+
+    // HENDERSON NOTE: Change the leaderboard to display time used, not time left
+
+
     //Converts the time to minutes and seconds
     var m = Math.floor(tmrHolder / 60);
     var s = tmrHolder % 60;
-    var stringM;
-    var stringS;
-    // || (curMine - 1 == leaderScores[diffCount][i] && (m > )))
+    //Used to temp store the seconds and minutes of the leaders
+    var leaderMinHolder = [];
+    var leaderSecHolder = [];
+    //Gets the seconds and minutes of each of the leaders in the selected difficulty in the leaderboard
+    for (i = 0; i < leaderTimes.length; i = i + 1) {
+        leaderSecHolder[i] = parseInt(leaderTimes[diffCount][i].slice(2));
+        leaderMinHolder[i] = parseInt(leaderTimes[diffCount][i].charAt(0));
+        console.log(leaderMinHolder[i]);
+    }
     //Runs through each place, ie 1 ,2 , 3
     for (i = 0; i < leaderNames.length; i = i + 1) {
         //Checks if the score is better than any in the difficulty
-        if (curMine - 1 > leaderScores[diffCount][i]) {
+        if (curMine - 1 > leaderScores[diffCount][i] || (curMine - 1 == leaderScores[diffCount][i] && (m < leaderMinHolder[i])) || leaderScores[diffCount][i] && (m == leaderMinHolder[i] && s < leaderSecHolder[i])) {
             //Replaces leader board with the new name and score
             leaderNames[diffCount][i] = name;
             leaderScores[diffCount][i] = curMine - 1;
+            leaderTimes[diffCount][i] = (m + ":" + s).toString();
             //Leaves the loop in order to only take the highest ranking the score achieves
             break;
         }

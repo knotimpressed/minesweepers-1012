@@ -103,6 +103,8 @@ button{
 
 .popUp {
     color: #fff;
+    font-family: monospace;
+    font-size: 15px;
     background-color: #1f1f1f;
     text-align: center;
     border-radius: 6px;

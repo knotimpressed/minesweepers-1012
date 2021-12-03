@@ -99,19 +99,29 @@ function updateLeader(name, timeLeft, tmrHolder, curMine, diffCount) {
         // Will put on leader if the score has more mines,  will put on leader if they took less time: total seconds check
         //if (curMine - 1 > leaderScores[diffCount][i] || (curMine - 1 == leaderScores[diffCount][i] && (m < leaderMinHolder[i])) || leaderScores[diffCount][i] && (m == leaderMinHolder[i] && s < leaderSecHolder[i])) {
           if (curMine - 1 > leaderScores[diffCount][i] || (curMine - 1 == leaderScores[diffCount][i] && (((m*60)+s) <= leaderSecHolder[i]))) {
-          // Replaces leader board with the new name and score, bumps down
-            if(i + 1 <= 2) {
+          // Replaces leader board with the new name and score, bumps down if its position 1 or 2
+            if(i == 0) {
+              leaderNames[diffCount][i+2] = leaderNames[diffCount][i+1];
+              leaderScores[diffCount][i+2] = leaderScores[diffCount][i+1];
+              leaderTimes[diffCount][i+2] = leaderTimes[diffCount][i+1];
               leaderNames[diffCount][i+1] = leaderNames[diffCount][i];
               leaderScores[diffCount][i+1] = leaderScores[diffCount][i];
+              leaderTimes[diffCount][i+1] = leaderTimes[diffCount][i];
+            }
+
+            else if(i == 1) {
+              leaderNames[diffCount][i+1] = leaderNames[diffCount][i];
+              leaderScores[diffCount][i+1] = leaderScores[diffCount][i];
+              leaderTimes[diffCount][i+1] = leaderTimes[diffCount][i];
             }
 
             leaderNames[diffCount][i] = name;
             leaderScores[diffCount][i] = curMine - 1;
-            if (s % 100 < 10) {
-                leaderTimes[diffCount][i] = (m + ":0" + s).toString();
+            if (s < 10) {
+              leaderTimes[diffCount][i] = (m + ":0" + s).toString();
             }
             else {
-                leaderTimes[diffCount][i] = (m + ":" + s).toString();
+              leaderTimes[diffCount][i] = (m + ":" + s).toString();
             }
             //Leaves the loop in order to only take the highest ranking the score achieves
             break;

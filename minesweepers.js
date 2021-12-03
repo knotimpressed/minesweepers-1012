@@ -37,11 +37,11 @@ function game() {
   timer(diffCount);
   //Creates back button
   var backButton = document.createElement("button");
-  $(backButton).attr("id", "back");
+  $(backButton).attr("id", "backH");
   backButton.innerHTML = "Back";
   $(".headright").append(backButton);
   //Returns to home screen
-  document.getElementById("back").onclick = function () { removeButt("back"); clearInterval(intervalId); home() };
+  document.getElementById("backH").onclick = function () { removeButt("backH"); clearInterval(intervalId); home() };
 }
 // game global variables, there here because this will likely change as we move to server-client
 
@@ -96,7 +96,8 @@ function gameover() {
 //Global Leader board variables
 // For simplisity is goes from left to right, easy - hard. And in each section the scores go from highest to lowest
 var leaderNames = [["Mike Ox", "Joe Mama", "Who?"], ["Sugondeez","Herobrine","Some Guy George"], ["Candice","Fitness","Your Mother"]];
-var leaderScores = [[10,7,3], [20,15,10], [30,20,10]];
+var leaderScores = [[10, 7, 3], [20, 15, 10], [30, 20, 10]];
+var leaderTimes = [["6:12", "5:11", "4:10"], ["5:07", "3:11", "2:10"], ["3:17", "2:10", "1:32"]];
 //Leader board, to look at it
 function leader() {
     //Displays the popup box and it's content
@@ -145,6 +146,8 @@ function removeDiv(divName) {
 }
 //To input data into the leader board
 function leaderInput() {
+    //Removes Back button
+    removeButt("backH");
     //Displays the popup
     document.getElementById("popUp").style.display = "block";
     //Creates the text element

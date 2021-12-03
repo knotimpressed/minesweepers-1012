@@ -75,6 +75,7 @@ function valMine(mineId) {// validate the current mine
 
 // won game
 function gameWin() {
+  tmrHolder = tmr;
   clearInterval(intervalId);
   console.log("W");
   //Back to the beginning
@@ -115,7 +116,7 @@ function leader() {
         document.getElementById("text").innerHTML = document.getElementById("text").innerHTML + "<br>" + "<u>" + difficulty[i].fontcolor(diffColor[i]) + "</u>";
         for (j = 0; j < leaderNames.length; j = j + 1) {
             //Prints out the leaders and their scores
-            document.getElementById("text").innerHTML = document.getElementById("text").innerHTML +"<br>" +leaderNames[i][j] +": " + leaderScores[i][j];
+            document.getElementById("text").innerHTML = document.getElementById("text").innerHTML + "<br>" + leaderNames[i][j] + ": " + leaderScores[i][j] + ", " + leaderTimes[i][j];
         }
     }
     //Creates the back button
@@ -177,10 +178,16 @@ function leaderInput() {
 
 //Leader Board Configurator
 function leaderData(name) {
+    //Converts the time to minutes and seconds
+    var m = Math.floor(tmrHolder / 60);
+    var s = tmrHolder % 60;
+    var stringM;
+    var stringS;
+    // || (curMine - 1 == leaderScores[diffCount][i] && (m > )))
     //Runs through each place, ie 1 ,2 , 3
     for (i = 0; i < leaderNames.length; i = i + 1) {
         //Checks if the score is better than any in the difficulty
-        if (curMine -1 > leaderScores[diffCount][i]) {
+        if (curMine - 1 > leaderScores[diffCount][i]) {
             //Replaces leader board with the new name and score
             leaderNames[diffCount][i] = name;
             leaderScores[diffCount][i] = curMine - 1;
@@ -238,7 +245,8 @@ function mines(diffCount) {
 //The timer's value and it's ID
 var tmr;
 var intervalId
-
+//@knot added this here to take the tmr time and then use for the leaderboard, I didn't wanna move the clears for the timer and risk shit not working
+var tmrHolder;
 //Timer
 function timer(diffCount) { // this is scuffed in that im assuming neither of us completely know how it works, i assume some of this is redundant
 
@@ -246,8 +254,8 @@ function timer(diffCount) { // this is scuffed in that im assuming neither of us
   var start = new Date();
   //Each difficulty in seconds from Easy - Hard(for now)
   var timeLeft = [10, 360, 240];
-
-  $("#timer").text((start - new Date()) / 1000 + timeLeft[diffCount] + " remaining");// this is here to remove the 1s delay before it appears
+  //$("#timer").text((start - new Date()) / 1000 + timeLeft[diffCount] + " remaining");// this is here to remove the 1s delay before it appears
+  //@knot ^^^ should just be good without this, left it here incase it becomes imporant
 
   //Counts down from the time selected by the difficulty
   intervalId = setInterval(timerUpdate, 1000, start, diffCount); // this is BY FAR my least favourite feature, the other paramaters to pass have to be after for it to work
@@ -259,9 +267,24 @@ function timerUpdate(start, diffCount) {
 
   //Each difficulty in seconds from Easy - Hard(for now)
   var timeLeft = [10, 360, 240];
-  $("#timer").text(parseInt((start - new Date()) / 1000) + timeLeft[diffCount] + " remaining");
+  //$("#timer").text(parseInt((start - new Date()) / 1000) + timeLeft[diffCount] + " remaining");
+  //@knot ^^^ should just be good without this, left it here incase it becomes imporant
   tmr = parseInt((start - new Date()) / 1000) + timeLeft[diffCount];// this should hopefully actully update the variable
+
+
+    //Minute and Second variables
+    var m = Math.floor(tmr / 60);
+    var s = tmr % 60;
+    //Displays the timer in minutes and seconds
+    //Creates a 0 in the tens position when seconds is less than 10
+    if (s%100 < 10) {
+        $("#timer").text(m + ":0" + s + " remaining");
+    }
+    else {
+        $("#timer").text(m + ":" + s + " remaining");
+    }
   if (tmr <= -1) {// -1 cause otherwise it wont propagate the 0
+    tmrHolder = tmr + 1; //Used to send the time to the leaderboard
     tmr = 100;// yeah yeah this is scuffed but it works (stops multiple alerts from being made)
     clearInterval(intervalId);
     gameover();

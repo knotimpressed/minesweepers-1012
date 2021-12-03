@@ -1,8 +1,7 @@
-//const { time } = require("console"); //@Knot idk what this is for but it prevents the game from working currently
-
 var url = "http://localhost:3000/post";
 
 var minesNum = [25, 50, 100];// this is global now, makes it easier to change too
+var timeLeft = [480, 360, 240];
 
 //Home Screen
 function home() {
@@ -185,8 +184,7 @@ function leaderData(name) {
     // HENDERSON NOTE: Change the leaderboard to display time used, not time left
 
 
-    //Converts converts the time from time left to time used, and puts it into minutes and seconds
-    var timeLeft = [480, 360, 240];
+    //Converts the time from time left to time used, and puts it into minutes and seconds
     var m = timeLeft[diffCount]/60 - (Math.ceil(tmrHolder / 60));
     var s = 60 - (tmrHolder % 60);
     //Used to temp store the seconds and minutes of the leaders
@@ -194,15 +192,25 @@ function leaderData(name) {
     var leaderSecHolder = [];
     //Gets the seconds and minutes of each of the leaders in the selected difficulty in the leaderboard
     for (i = 0; i < leaderTimes.length; i = i + 1) {
+        //leaderSecHolder[i] = parseInt(leaderTimes[diffCount][i].slice(2));
+        //leaderMinHolder[i] = parseInt(leaderTimes[diffCount][i].charAt(0));// only works up to 9:59
+
         leaderSecHolder[i] = parseInt(leaderTimes[diffCount][i].slice(2));
-        leaderMinHolder[i] = parseInt(leaderTimes[diffCount][i].charAt(0));
+        leaderSecHolder[i] += 60*(parseInt(leaderTimes[diffCount][i].charAt(0)));// only works up to 9:59
+        console.log(leaderSecHolder[i]);
     }
     //Runs through each place, ie 1 ,2 , 3
     for (i = 0; i < leaderNames.length; i = i + 1) {
         //Checks if the score is better than any in the difficulty
-        //Will put on leader if the score has more mines,  will put on leader if they took less time: minute check ,   will put on leader if they took less time: second check
-        if (curMine - 1 > leaderScores[diffCount][i] || (curMine - 1 == leaderScores[diffCount][i] && (m < leaderMinHolder[i])) || leaderScores[diffCount][i] && (m == leaderMinHolder[i] && s < leaderSecHolder[i])) {
-            //Replaces leader board with the new name and score
+        // Will put on leader if the score has more mines,  will put on leader if they took less time: total seconds check
+        //if (curMine - 1 > leaderScores[diffCount][i] || (curMine - 1 == leaderScores[diffCount][i] && (m < leaderMinHolder[i])) || leaderScores[diffCount][i] && (m == leaderMinHolder[i] && s < leaderSecHolder[i])) {
+          if (curMine - 1 > leaderScores[diffCount][i] || (curMine - 1 == leaderScores[diffCount][i] && (((m*60)+s) <= leaderSecHolder[i]))) {
+          // Replaces leader board with the new name and score, bumps down
+            if(i + 1 <= 2) {
+              leaderNames[diffCount][i+1] = leaderNames[diffCount][i];
+              leaderScores[diffCount][i+1] = leaderScores[diffCount][i];
+            }
+
             leaderNames[diffCount][i] = name;
             leaderScores[diffCount][i] = curMine - 1;
             if (s % 100 < 10) {
@@ -270,12 +278,20 @@ var tmrHolder;
 //Timer
 function timer(diffCount) { // this is scuffed in that im assuming neither of us completely know how it works, i assume some of this is redundant
 
-  //Original time to start the timer from
+  //Original time to start the timer from, this is here so the total time shows up
   var start = new Date();
-  //Each difficulty in seconds from Easy - Hard(for now)
-  //var timeLeft = [10, 360, 240];
-  //$("#timer").text((start - new Date()) / 1000 + timeLeft[diffCount] + " remaining");// this is here to remove the 1s delay before it appears
-  //@knot ^^^ should just be good without this, left it here incase it becomes imporant
+  tmr = timeLeft[diffCount];
+
+  var m = Math.floor(tmr / 60);
+  var s = tmr % 60;
+  //Displays the timer in minutes and seconds
+  //Creates a 0 in the tens position when seconds is less than 10
+  if (s < 10) {
+      $("#timer").text(m + ":0" + s + " remaining");
+  }
+  else {
+      $("#timer").text(m + ":" + s + " remaining");
+  }
 
   //Counts down from the time selected by the difficulty
   intervalId = setInterval(timerUpdate, 1000, start, diffCount); // this is BY FAR my least favourite feature, the other paramaters to pass have to be after for it to work
@@ -286,7 +302,6 @@ function timerUpdate(start, diffCount) {
   //notes: parse int is there to cast it as an int, idk if this is the best way but it does work lol
 
   //Each difficulty in seconds from Easy - Hard(for now)
-  var timeLeft = [480, 360, 240];
   //$("#timer").text(parseInt((start - new Date()) / 1000) + timeLeft[diffCount] + " remaining");
   //@knot ^^^ should just be good without this, left it here incase it becomes imporant
   tmr = parseInt((start - new Date()) / 1000) + timeLeft[diffCount];// this should hopefully actully update the variable
@@ -297,7 +312,7 @@ function timerUpdate(start, diffCount) {
     var s = tmr % 60;
     //Displays the timer in minutes and seconds
     //Creates a 0 in the tens position when seconds is less than 10
-    if (s%100 < 10) {
+    if (s < 10) {
         $("#timer").text(m + ":0" + s + " remaining");
     }
     else {

@@ -35,6 +35,13 @@ function game() {
   clearInterval(intervalId);
   //Starts timer
   timer(diffCount);
+  //Creates back button
+  var backButton = document.createElement("button");
+  $(backButton).attr("id", "back");
+  backButton.innerHTML = "Back";
+  $(".headright").append(backButton);
+  //Returns to home screen
+  document.getElementById("back").onclick = function () { removeButt("back"); clearInterval(intervalId); home() };
 }
 // game global variables, there here because this will likely change as we move to server-client
 

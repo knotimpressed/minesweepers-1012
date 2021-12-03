@@ -1,3 +1,5 @@
+//const { time } = require("console"); //@Knot idk what this is for but it prevents the game from working currently
+
 var url = "http://localhost:3000/post";
 
 var minesNum = [25, 50, 100];// this is global now, makes it easier to change too
@@ -87,6 +89,7 @@ function gameWin() {
 
 // lost game
 function gameover() {
+  tmrHolder = tmr;
   clearInterval(intervalId);
   console.log("L");
   //Back to the home screen
@@ -182,9 +185,10 @@ function leaderData(name) {
     // HENDERSON NOTE: Change the leaderboard to display time used, not time left
 
 
-    //Converts the time to minutes and seconds
-    var m = Math.floor(tmrHolder / 60);
-    var s = tmrHolder % 60;
+    //Converts converts the time from time left to time used, and puts it into minutes and seconds
+    var timeLeft = [480, 360, 240];
+    var m = timeLeft[diffCount]/60 - (Math.ceil(tmrHolder / 60));
+    var s = 60 - (tmrHolder % 60);
     //Used to temp store the seconds and minutes of the leaders
     var leaderMinHolder = [];
     var leaderSecHolder = [];
@@ -192,16 +196,21 @@ function leaderData(name) {
     for (i = 0; i < leaderTimes.length; i = i + 1) {
         leaderSecHolder[i] = parseInt(leaderTimes[diffCount][i].slice(2));
         leaderMinHolder[i] = parseInt(leaderTimes[diffCount][i].charAt(0));
-        console.log(leaderMinHolder[i]);
     }
     //Runs through each place, ie 1 ,2 , 3
     for (i = 0; i < leaderNames.length; i = i + 1) {
         //Checks if the score is better than any in the difficulty
+        //Will put on leader if the score has more mines,  will put on leader if they took less time: minute check ,   will put on leader if they took less time: second check
         if (curMine - 1 > leaderScores[diffCount][i] || (curMine - 1 == leaderScores[diffCount][i] && (m < leaderMinHolder[i])) || leaderScores[diffCount][i] && (m == leaderMinHolder[i] && s < leaderSecHolder[i])) {
             //Replaces leader board with the new name and score
             leaderNames[diffCount][i] = name;
             leaderScores[diffCount][i] = curMine - 1;
-            leaderTimes[diffCount][i] = (m + ":" + s).toString();
+            if (s % 100 < 10) {
+                leaderTimes[diffCount][i] = (m + ":0" + s).toString();
+            }
+            else {
+                leaderTimes[diffCount][i] = (m + ":" + s).toString();
+            }
             //Leaves the loop in order to only take the highest ranking the score achieves
             break;
         }
@@ -264,7 +273,7 @@ function timer(diffCount) { // this is scuffed in that im assuming neither of us
   //Original time to start the timer from
   var start = new Date();
   //Each difficulty in seconds from Easy - Hard(for now)
-  var timeLeft = [10, 360, 240];
+  //var timeLeft = [10, 360, 240];
   //$("#timer").text((start - new Date()) / 1000 + timeLeft[diffCount] + " remaining");// this is here to remove the 1s delay before it appears
   //@knot ^^^ should just be good without this, left it here incase it becomes imporant
 
@@ -277,13 +286,13 @@ function timerUpdate(start, diffCount) {
   //notes: parse int is there to cast it as an int, idk if this is the best way but it does work lol
 
   //Each difficulty in seconds from Easy - Hard(for now)
-  var timeLeft = [10, 360, 240];
+  var timeLeft = [480, 360, 240];
   //$("#timer").text(parseInt((start - new Date()) / 1000) + timeLeft[diffCount] + " remaining");
   //@knot ^^^ should just be good without this, left it here incase it becomes imporant
   tmr = parseInt((start - new Date()) / 1000) + timeLeft[diffCount];// this should hopefully actully update the variable
 
 
-    //Minute and Second variables
+    //Minute and Second variables, converts tmr to minutes and seconds
     var m = Math.floor(tmr / 60);
     var s = tmr % 60;
     //Displays the timer in minutes and seconds
@@ -295,7 +304,7 @@ function timerUpdate(start, diffCount) {
         $("#timer").text(m + ":" + s + " remaining");
     }
   if (tmr <= -1) {// -1 cause otherwise it wont propagate the 0
-    tmrHolder = tmr + 1; //Used to send the time to the leaderboard
+    tmrHolder = 0; //Used to send the time to the leaderboard
     tmr = 100;// yeah yeah this is scuffed but it works (stops multiple alerts from being made)
     clearInterval(intervalId);
     gameover();

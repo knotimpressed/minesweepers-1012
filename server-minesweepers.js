@@ -4,7 +4,7 @@ var mines = [];
 
 //Global Leader board variables
 // For simplisity is goes from left to right, easy - hard. And in each section the scores go from highest to lowest
-var leaderNames = [["Mike SERVER's Ox", "Joe Mama", "Who?"], ["Sugondeez","Herobrine","Some Guy George"], ["Candice","Fitness","Your Mother"]];
+var leaderNames = [["George", "Joe", "William"], ["Sarah","Herobrine","Phillip"], ["Candice","Kurt","Brendan Eich"]];
 var leaderScores = [[10, 7, 3], [20, 15, 10], [30, 20, 10]];
 var leaderTimes = [["6:12", "5:11", "4:10"], ["5:07", "3:11", "2:10"], ["3:17", "2:10", "1:32"]];
 

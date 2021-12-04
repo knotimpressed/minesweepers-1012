@@ -24,6 +24,10 @@ function home() {
 
 //The game play
 function game() {
+    //Prevents a Duplication of the Back button
+    if (document.getElementById("backH")) {
+        removeButt("backH");
+    }
   //Resets Mine Count
     curMine = 1;
   //Removes the home Screen

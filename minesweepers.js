@@ -24,7 +24,7 @@ function home() {
 
 //The game play
 function game() {
-  //Resets Mine Count @knot moved the mine counter reset, so the leaderData gets the correct mine count
+  //Resets Mine Count
     curMine = 1;
   //Removes the home Screen
   document.getElementById("home").style.display = "none";
@@ -185,7 +185,6 @@ function leaderInput() {
       removeIn("name"); 
       removeDiv("nameDiv"); 
       home()
-      //leader()// listen this could be here but just so we dont have to deal with JS's async stuff its not
     };
 }
 
@@ -250,7 +249,7 @@ function difficulty() {
 }
 
 //Random Mine Number Generation
-var minesRandom; // this is global to work with the function, SLOPPY
+var minesRandom; // this is global to work with the function
 function mines(diffCount) {
   getMines(diffCount);
 }
@@ -259,7 +258,6 @@ function mines(diffCount) {
 //The timer's value and it's ID
 var tmr;
 var intervalId
-//@knot added this here to take the tmr time and then use for the leaderboard, I didn't wanna move the clears for the timer and risk shit not working
 var tmrHolder;
 //Timer
 function timer(diffCount) { // this is scuffed in that im assuming neither of us completely know how it works, i assume some of this is redundant
@@ -284,12 +282,6 @@ function timer(diffCount) { // this is scuffed in that im assuming neither of us
 }
 
 function timerUpdate(start, diffCount) {
-
-  //notes: parse int is there to cast it as an int, idk if this is the best way but it does work lol
-
-  //Each difficulty in seconds from Easy - Hard(for now)
-  //$("#timer").text(parseInt((start - new Date()) / 1000) + timeLeft[diffCount] + " remaining");
-  //@knot ^^^ should just be good without this, left it here incase it becomes imporant
   tmr = parseInt((start - new Date()) / 1000) + timeLeft[diffCount];// this should hopefully actully update the variable
 
 
@@ -351,7 +343,7 @@ function response(data, status){
       board.appendChild(mines);
     }
     //validate the mine when its clicked
-    $(document).ready(function () {// yes i stole this(ish), no i dont know how it works
+    $(document).ready(function () {
       $(".mine").click(function () {
         valMine(this.id);
       });

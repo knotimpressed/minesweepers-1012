@@ -95,13 +95,6 @@ button{
   outline: none;
 }
 
-/*
-.pretty:hover {
-  background-color: #00fff2;
-  box-shadow: 0px 15px 20px rgba(9, 200, 180, 0.4); 
-}
-*/
-
 #easy:hover {
   background-color: #00fff2;
   box-shadow: 0px 15px 20px rgba(9, 200, 180, 0.4); 

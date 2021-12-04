@@ -233,14 +233,19 @@ function difficulty() {
   if (diffCount == 0) {
     document.getElementById("diff").innerHTML = "Easy";
     document.getElementById("diff").style.background = "#03F7EB";
+    $("#hard").attr("id", "easy");
   }
   else if (diffCount == 1) {
     document.getElementById("diff").innerHTML = "Medium";
+    $("#easy").attr("id", "med");
     document.getElementById("diff").style.background = "#F48C06";
+
   }
   else if (diffCount == 2) {
     document.getElementById("diff").innerHTML = "Hard";
     document.getElementById("diff").style.background = "#DC2F02";
+    $("#med").attr("id", "hard");
+
   }
 }
 

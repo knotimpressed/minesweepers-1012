@@ -37,6 +37,7 @@ app.post('/post', (req, res) => {
       var tmrHolder = postData['tmrHolder'];
       var curMine = postData['curMine'];
       var diffCount = postData['diffCount'];
+      console.log("timeleft" + timeLeft);
 
       var jsontext = updateLeader(name, timeLeft, tmrHolder, curMine, diffCount);
       //evaluate the attempt_code for this user
@@ -80,8 +81,18 @@ function generateMines(diffNum) {
 
 function updateLeader(name, timeLeft, tmrHolder, curMine, diffCount) {
     //Converts the time from time left to time used, and puts it into minutes and seconds
-    var m = timeLeft[diffCount]/60 - (Math.ceil(tmrHolder / 60));
-    var s = 60 - (tmrHolder % 60);
+
+    
+    var totS = timeLeft[diffCount] - tmrHolder;// total seconds used
+    var m = Math.floor(totS/60);
+    var s = (totS % 60);
+
+    //console.log("tmrholder: " + tmrHolder);
+    //var m = timeLeft[diffCount]/60 - (Math.ceil(tmrHolder / 60));
+    //var s = 60 - (tmrHolder % 60);
+    console.log("totS: " + totS);
+    console.log("m: " + m);
+    console.log("s: " + s);
     //Used to temp store the seconds of the leaders
     var leaderSecHolder = [];
     //Gets the seconds and minutes of each of the leaders in the selected difficulty in the leaderboard

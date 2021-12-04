@@ -82,7 +82,7 @@ function valMine(mineId) {// validate the current mine
 
 // won game
 function gameWin() {
-  tmrHolder = tmr;
+  tmrHolder = tmr + 1;
   clearInterval(intervalId);
   console.log("W");
   //Back to the beginning
@@ -94,7 +94,7 @@ function gameWin() {
 
 // lost game
 function gameover() {
-  tmrHolder = tmr;
+  tmrHolder = tmr + 1;
   clearInterval(intervalId);
   console.log("L");
   //Back to the home screen
@@ -197,6 +197,8 @@ function leaderData(name, curMineLead) {
 
     //inputs are name, timeleft, tmrholder, curmine
     // for leader display use this with no name and no score
+
+
 
     $.post(url+'?data='+JSON.stringify({
       'action':'leader',
@@ -302,7 +304,7 @@ function timerUpdate(start, diffCount) {
     }
   if (tmr <= -1) {// -1 cause otherwise it wont propagate the 0
     tmrHolder = 0; //Used to send the time to the leaderboard
-    tmr = 100;// yeah yeah this is scuffed but it works (stops multiple alerts from being made)
+    //tmr = 100;// yeah yeah this is scuffed but it works (stops multiple alerts from being made)
     clearInterval(intervalId);
     gameover();
   }
